@@ -1,0 +1,6 @@
+export * from './feed.component'
+export * from './add-post/add-post.component'
+export * from './edit-post/edit-post.component'
+export * from './comments/comments.component'
+export * from './comments/add-com/add-com.component'
+export * from './comments/edit-com/edit-com.component'

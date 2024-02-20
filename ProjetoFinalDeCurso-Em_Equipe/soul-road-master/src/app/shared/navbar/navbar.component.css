@@ -1,0 +1,68 @@
+.header{
+    background: #3CB4C4;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.img-btn{
+    height: 40px;
+    margin-right: 10px;
+}
+
+.pesquisa{
+    margin-left: 25%;
+}
+
+.input_pesquisa{
+    width: 25vw;
+    padding: 7px;
+    border: none;
+    padding-left: 35px;
+    border-radius: 20px;
+    background: #fff;
+}
+
+.botao_pesquisa{
+    position: relative;
+    right: 90%;
+    padding-bottom: 5px;
+    background: transparent;
+    border: transparent;
+    cursor: pointer;
+}
+
+.input-group-text, #inlineFormInputGroupUsername{
+    background: #fff !important;
+    border: none !important;
+}
+
+.input-group-text{
+    border-top-left-radius: 20px !important;
+    border-bottom-left-radius: 20px !important;
+}
+
+#inlineFormInputGroupUsername{
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+
+@media only screen and (max-width: 600px){
+    .search-input{
+        width: 98%;
+    }
+    .input-group-prepend{
+        width: 10%;
+    }
+    #inlineFormInputGroupUsername{
+        width: 90%;
+    }
+    .pesquisa{
+        margin-left: 0%;
+    }
+    
+}
+
+
+

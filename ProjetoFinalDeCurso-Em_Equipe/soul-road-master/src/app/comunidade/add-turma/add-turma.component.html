@@ -1,0 +1,21 @@
+<app-navbar></app-navbar>
+
+<main class="container">
+    <div class="mt-5">
+        <h2 class="text-center my-2 tituloTurma">ADICIONAR NOVA TURMA</h2>
+        <button routerLink="/gerenciamento" type="submit" class="btn btn-primary my-2 float-rigth">Voltar</button>
+    </div>
+    
+    <div class="container-categoria d-flex align-items-center mt-5">
+        <form #addTurmasForm="ngForm" class="container mt-4" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+                <label for="codigo" class="assuntoTurma">Código da turma:</label>
+                <input type="text" class="form-control" id="codigo" name="codigo" [(ngModel)]="turma.codigoTurma" placeholder="Ex: BCW5 - Web Full Stack"required />
+            </div> 
+            <button type="submit" class="btn btn-primary">
+                 Adicionar
+            </button>
+        </form>
+    </div>  
+</main>
+

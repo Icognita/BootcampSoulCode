@@ -1,0 +1,171 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap');
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    background-color: #f0f4f8;
+}
+
+.container {
+    margin-top: 20px;
+}
+
+.nav-item .nav-link {
+    color: #000 !important;
+    transition: .2s;
+}
+
+.nav-item .nav-link:hover {
+    opacity: .5;
+}
+
+.btn.btn-success,
+.btn-primary , .btn-outline-success {
+    border: none;
+    background-color: #b0c4de !important;
+    color: #000;
+}
+
+nav.navbar {
+    background-color: #b0c4de !important;
+}
+
+aside {
+    color: white;
+}
+
+footer {
+    color: white;
+}
+
+#img-nav {
+    width: 60px;
+}
+
+h1 {
+    color: black;
+    font-size: 550%;
+    text-align: center;
+}
+
+.main {
+    padding: 10px;
+}
+
+#carouselExampleCaptions {
+    width: 900px;
+    height: 500px;
+    overflow: hidden;
+    text-align: center;
+}
+
+.-deactivated {
+    display: none;
+}
+
+@media (min-width: 768px) and (max-width: 1199px) {
+    .card {
+        max-width: 12rem;
+    }
+    .container-cards {
+        flex: 0 0 100%;
+        max-width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+    .container-aside {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}
+
+.footer-container {
+    width: 100%;
+    margin-top: 5rem;
+    background-color: #B0C4DE;
+    position: relative;
+}
+
+.footer-content {
+    padding: 2rem 0;
+    width: 1140px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.footer-content svg {
+    fill: #182639;
+}
+
+.footer-content a {
+    text-decoration: none;
+    color: #182639;
+    transition: .5s;
+}
+
+.footer-content a:hover {
+    opacity: .8;
+}
+
+.footer-content p {
+    color: #182639;
+    padding: 0;
+}
+
+.footer-content::after {
+    content: '';
+    display: block;
+    width: 160px;
+    height: 200px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(-50%, -50%);
+    background: url(https://imagens.hstern.com.br/revistavogue/01.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.artigo {
+    border-bottom: 1px solid #ccc;
+}
+
+.cursor {
+    z-index: 1000;
+    position: fixed;
+    width: 80px;
+    height: 80px;
+    right: 10px;
+    border-radius: 50%;
+    bottom: 800px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    visibility: hidden;
+    opacity: 0;
+    transition: .5s;
+    line-height: 80px;
+    text-align: center;
+    background-image: url(./imagens/seta-cima.png);
+}
+
+.cursor.-acitve {
+    bottom: 0;
+    visibility: visible;
+    opacity: 1;
+}
+
+@media (max-width: 1604px) {
+    .footer-content {
+        width: 100%;
+        flex-direction: column;
+        background: radial-gradient(circle, rgba(255, 255, 255, 0.842) 39%, rgba(0, 0, 0, 0.911) 100%), url(https://imagens.hstern.com.br/revistavogue/01.jpg);
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+    .footer-content::after {
+        content: '';
+        display: none;
+    }
+}

@@ -1,0 +1,63 @@
+<app-navbar></app-navbar>
+
+<div>
+  <img src="../../../../assets/bannerQuiz2.jpg" class="img-fluid imagem_quiz">
+</div>
+
+<div class="container-fluid mt-3">  
+  
+  <div>
+    <h1 class="text-center my-5">ESCOLHA ENTRE AS OPÇÕES DE QUIZ!</h1>   
+    <div class="linha_amarela mt-3 mb-3"></div> 
+  </div>  
+
+  <div *ngIf="allQuiz$ | async as user; else spinner"></div>
+  <div class="row my-5" *ngFor="let quiz of allQuiz$ | async">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+      <div class="card">
+        <h5 class="card-header">{{ quiz.assunto }}</h5>
+        <div class="card-body">
+          <h5 class="card-title">Pontos: {{ quiz.pontuacao }}</h5>
+          <h5 class="card-title">Questões: {{ quiz.numeroPerguntas }}</h5>
+          <small class="card-text"><b>Criado por:</b> {{ quiz.nomeCriador }}</small>
+          <div  *ngIf="(usuario.isAdmin === 'Sim')||(usuario.isTeacher === 'Sim')">
+            <button class="btn btn-danger float-right" (click)="deleteQuiz(quiz)">Deletar</button>  
+          </div>          
+          <button class="btn btn-info float-right" (click)="keyQuiz(quiz)">Jogar</button>
+         </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #spinner>
+    <div class="d-flex align-items-center">
+      <strong>Carregando...</strong>
+      <div class="spinner-border ml-auto text-primary" role="status" aria-hidden="true"></div>
+    </div>
+  </ng-template>
+
+  <!-- <a href="/add-quiz" class="btn btn-secondary mr-4 mt-2" style="float: right;">Criar Quiz</a>
+<section class="container my-2">
+
+
+  <div *ngIf="allQuiz$ | async as user; else spinner"></div>
+  <div class="row">
+    <div class="col col-12 my-1" *ngFor="let quiz of allQuiz$ | async">
+      <div class="card" style="width: 80%">
+        <div class="card-body">
+          <h5 class="card-title">{{ quiz.assunto }}</h5>
+          <small> Criado por {{ quiz.nomeCriador }}</small>
+          <button class="btn btn-info float-right" (click)="keyQuiz(quiz)">Jogar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<ng-template #spinner>
+  <div class="d-flex align-items-center">
+    <strong>Carregando...</strong>
+    <div class="spinner-border ml-auto text-primary" role="status" aria-hidden="true"></div>
+  </div>
+</ng-template> -->

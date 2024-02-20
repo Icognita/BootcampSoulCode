@@ -1,0 +1,105 @@
+<nav class="navbar navbar-expand-md navbar-light header" *ngIf="router.url === '/feed'">
+  <a class="navbar-brand" routerLink="/home"><img class="img-fluid" src="../../../assets/logo.png"></a>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse mr-auto" id="navbarSupportedContent">
+
+    <ul class="navbar-nav pesquisa mr-3" >
+      <li class="nav-item d-flex flex-row">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <div class="input-group-text">
+              <span style="font-size: 1.2rem;" class="iconify" data-icon="bi:search"></span>
+            </div>
+          </div>
+          <input type="search" [(ngModel)]="searchText" (input)="searchInput()" class="form-control" id="inlineFormInputGroupUsername"  placeholder="Buscar na SoulRoad">
+        </div>        
+      </li>
+    </ul>
+
+    <ul class="navbar-nav ml-sm-auto my-2 my-md-auto list-group-horizontal">
+      <li class="nav-item mx-2 mx-md-auto" *ngIf="usuario.isAdmin === 'Sim' || usuario.isTeacher === 'Sim' ">
+        <a routerLink="/gerenciamento" ><img class="img-btn" src="../../../assets/btnGerenciamento.png"></a>
+      </li>
+      <li class="nav-item mx-2 mx-md-auto">
+        <a routerLink="/game" ><img class="img-btn" src="../../../assets/btnGame.png"></a>
+      </li>
+      <li class="nav-item mx-2 mx-md-auto">
+        <a routerLink="/perfil" ><img class="img-btn" src="../../../assets/btnPerfil.png"></a>
+      </li>
+      <li class="nav-item mx-2 mx-md-auto">
+        <a class="pt-2 btn btn-warning" (click)="logout()" routerLink='/' role="button">Sair</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<nav class="navbar navbar-expand-md navbar-light header" *ngIf="router.url === '/perfil'">
+  <a class="navbar-brand" routerLink="/home"><img class="img-fluid" src="../../../assets/logo.png"></a>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse mr-auto" id="navbarSupportedContent">
+
+    <ul class="navbar-nav pesquisa mr-3" >
+      <li class="nav-item d-flex flex-row">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <div class="input-group-text">
+              <span style="font-size: 1.2rem;" class="iconify" data-icon="bi:search"></span>
+            </div>
+          </div>
+          <input type="search" [(ngModel)]="searchText" (input)="searchInput()" class="form-control" id="inlineFormInputGroupUsername"  placeholder="Buscar na SoulRoad">
+        </div>        
+      </li>
+    </ul>
+
+    <ul class="navbar-nav ml-sm-auto my-2 my-md-auto list-group-horizontal">
+      <li class="nav-item mx-2 mx-md-auto" *ngIf="usuario.isAdmin === 'Sim' || usuario.isTeacher === 'Sim' ">
+        <a routerLink="/gerenciamento" ><img class="img-btn" src="../../../assets/btnGerenciamento.png"></a>
+      </li>
+      <li class="nav-item mx-2 mx-md-auto">
+        <a routerLink="/game" ><img class="img-btn" src="../../../assets/btnGame.png"></a>
+      </li>
+      <li class="nav-item mx-2 mx-md-auto">
+        <a routerLink="/perfil" ><img class="img-btn" src="../../../assets/btnPerfil.png"></a>
+      </li>
+      <li class="nav-item mx-2 mx-md-auto">
+        <a class="pt-2 btn btn-warning" (click)="logout()" routerLink='/' role="button">Sair</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<nav class="navbar navbar-expand-md navbar-light header" *ngIf="router.url !== '/perfil' && router.url !== '/feed'">
+  <a class="navbar-brand" routerLink="/home"><img class="img-fluid" src="../../../assets/logo.png"></a>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse mr-auto" id="navbarSupportedContent">
+
+    <ul class="navbar-nav ml-sm-auto my-2 my-md-auto list-group-horizontal">
+      <li class="nav-item mx-2 mx-md-auto" *ngIf="usuario.isAdmin === 'Sim' || usuario.isTeacher === 'Sim' ">
+        <a routerLink="/gerenciamento" ><img class="img-btn" src="../../../assets/btnGerenciamento.png"></a>
+      </li>
+      <li class="nav-item mx-2 mx-md-auto">
+        <a routerLink="/game" ><img class="img-btn" src="../../../assets/btnGame.png"></a>
+      </li>
+      <li class="nav-item mx-2 mx-md-auto">
+        <a routerLink="/perfil" ><img class="img-btn" src="../../../assets/btnPerfil.png"></a>
+      </li>
+      <li class="nav-item mx-2 mx-md-auto">
+        <a class="pt-2 btn btn-warning" (click)="logout()" routerLink='/' role="button">Sair</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+

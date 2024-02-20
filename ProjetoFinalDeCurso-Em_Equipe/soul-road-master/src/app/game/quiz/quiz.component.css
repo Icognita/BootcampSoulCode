@@ -1,0 +1,14 @@
+.imagem_quiz{
+    width: 100%;
+}
+
+h1{
+    font-weight: 900;
+    color: #3F97D3;
+}
+
+.linha_amarela{
+    background: #FAC100;
+    height: 2px;
+    width: 100%;
+}

@@ -1,0 +1,257 @@
+<app-navbar></app-navbar>
+<div id="wrapper" class="toggled">
+  <div id="sidebar-wrapper">
+    <ul class="sidebar-nav">
+      <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+        <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-administradores" role="tab"
+          aria-controls="v-pills-administradores" aria-selected="false">Administradores</a>
+        <a class="nav-link" id="v-pills-professores-tab" data-toggle="pill" href="#v-pills-professores" role="tab"
+          aria-controls="v-pills-professores" aria-selected="false">Professores</a>
+        <a class="nav-link" id="v-pills-alunos-tab" data-toggle="pill" href="#v-pills-alunos" role="tab"
+          aria-controls="v-pills-alunos" aria-selected="false">Alunos</a>
+        <a class="nav-link" id="v-pills-inativos-tab" data-toggle="pill" href="#v-pills-inativos" role="tab"
+          aria-controls="v-inativos-home" aria-selected="false">Inativos</a>
+      </div>
+    </ul>
+  </div>
+
+  <div class="menu_mobile mb-3">
+    <nav class="nav nav-pills nav-justified">
+      <a class="nav-link active border_bottom" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-administradores"
+        role="tab" aria-controls="v-pills-administradores" aria-selected="false">Administradores</a>
+      <a class="nav-link" id="v-pills-professores-tab" data-toggle="pill" href="#v-pills-professores" role="tab"
+        aria-controls="v-pills-professores" aria-selected="false">Professores</a>
+      <a class="nav-link border_bottom" id="v-pills-alunos-tab" data-toggle="pill" href="#v-pills-alunos" role="tab"
+        aria-controls="v-pills-alunos" aria-selected="false">Alunos</a>
+      <a class="nav-link" id="v-pills-inativos-tab" data-toggle="pill" href="#v-pills-inativos" role="tab"
+        aria-controls="v-inativos-home" aria-selected="false">Inativos</a>
+    </nav>    
+  </div>
+
+  <div id="page-content-wrapper">
+
+    <div class="tab-content" id="v-pills-tabContent">
+      <div class="tab-pane fade show active" id="v-pills-administradores" role="tabpanel"
+        aria-labelledby="v-pills-administradores-tab">
+        <h1 class="h1_controle_admin">Controle de Usuários</h1>
+
+        <div>
+          <input class="form mb-3" type="text" name="term" [(ngModel)]="term" placeholder="pesquisar">
+        </div>
+
+        <table class="table table-striped table-responsive">
+          <thead style="color: white;">
+            <tr>
+              <th scope="col">Id</th>
+              <th scope="col">Nome</th>
+              <th scope="col">Data de Nascimento</th>
+              <th scope="col">E-mail</th>
+              <th scope="col">Telefone</th>
+              <th scope="col">Turma</th>
+              <th scope="col">País</th>
+              <th scope="col">Estado</th>
+              <th scope="col">Prof</th>
+              <th scope="col">Admin</th>
+              <th scope="col">Status</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let user of User | filter : term | orderBy: key: reverse | paginate: { itemsPerPage:10,currentPage:page}; let i = index">
+              <ng-container *ngIf="(user.isAdmin === 'Sim')&&(user.userAuthorization == true)">
+                <th scope="row">{{id[i]}}</th>
+                <td> {{user.fullname}} </td>
+                <td> {{user.birthdate | date: 'dd/MM/yyyy'}}</td>
+                <td> {{user.email}}</td>
+                <td> {{user.phoneNumber}}</td>
+                <td> {{user.classroom}}</td>
+                <td> {{user.country}}</td>
+                <td> {{user.state}}</td>
+                <td> {{user.isTeacher}}</td>
+                <td> {{user.isAdmin}}</td>
+                <td *ngIf="user.userAuthorization == true"> Ativo</td>
+                <td *ngIf="user.userAuthorization == false"> Inativo</td>
+                <td>
+                  <button class="btn btn-sm btn-outline-primary" (click)="openUpdateUserModal(user)">
+                    Editar
+                  </button>
+                </td>
+              </ng-container>
+
+            </tr>
+          </tbody>
+        </table>
+
+        <pagination-controls (pageChange)="page = $event" previousLabel="Anterior" nextLabel="Próximo">
+        </pagination-controls>
+
+      </div>
+      <div class="tab-pane fade" id="v-pills-professores" role="tabpanel" aria-labelledby="v-pills-professores-tab">
+        <h1 class="h1_controle_admin">Controle de Usuários</h1>
+
+        <div>
+          <input class="form mb-3" type="text" name="term" [(ngModel)]="term" placeholder="pesquisar">
+        </div>
+
+        <table class="table table-striped table-responsive">
+          <thead style="color: white;">
+            <tr>
+              <th scope="col">Id</th>
+              <th scope="col">Nome</th>
+              <th scope="col">Data de Nascimento</th>
+              <th scope="col">E-mail</th>
+              <th scope="col">Telefone</th>
+              <th scope="col">Turma</th>
+              <th scope="col">País</th>
+              <th scope="col">Estado</th>
+              <th scope="col">Prof</th>
+              <th scope="col">Admin</th>
+              <th scope="col">Status</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let user of User | filter : term | orderBy: key: reverse | paginate: { itemsPerPage:10,currentPage:page}; let i = index">
+              <ng-container *ngIf="(user.isTeacher === 'Sim')&&(user.userAuthorization == true)">
+                <th scope="row">{{id[i]}}</th>
+                <td> {{user.fullname}} </td>
+                <td> {{user.birthdate | date: 'dd/MM/yyyy'}}</td>
+                <td> {{user.email}}</td>
+                <td> {{user.phoneNumber}}</td>
+                <td> {{user.classroom}}</td>
+                <td> {{user.country}}</td>
+                <td> {{user.state}}</td>
+                <td> {{user.isTeacher}}</td>
+                <td> {{user.isAdmin}}</td>
+                <td *ngIf="user.userAuthorization == true"> Ativo</td>
+                <td *ngIf="user.userAuthorization == false"> Inativo</td>
+                <td>
+                  <button class="btn btn-sm btn-outline-primary" (click)="openUpdateUserModal(user)">
+                    Editar
+                  </button>
+                </td>
+              </ng-container>
+
+            </tr>
+          </tbody>
+        </table>
+        <pagination-controls (pageChange)="page = $event" previousLabel="Anterior" nextLabel="Próximo">
+        </pagination-controls>
+      </div>
+      <!-- alunos -->
+      <div class="tab-pane fade" id="v-pills-alunos" role="tabpanel" aria-labelledby="v-pills-alunos-tab">
+        <h1 class="h1_controle_admin">Controle de Usuários</h1>
+
+        <div>
+          <input class="form mb-3" type="text" name="term" [(ngModel)]="term" placeholder="pesquisar">
+        </div>
+
+        <table class="table table-striped table-responsive">
+          <thead style="color: white;">
+            <tr>
+              <th scope="col">Id</th>
+              <th scope="col">Nome</th>
+              <th scope="col">Data de Nascimento</th>
+              <th scope="col">E-mail</th>
+              <th scope="col">Telefone</th>
+              <th scope="col">Turma</th>
+              <th scope="col">País</th>
+              <th scope="col">Estado</th>
+              <th scope="col">Prof</th>
+              <th scope="col">Admin</th>
+              <th scope="col">Status</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let user of User | filter : term | orderBy: key: reverse | paginate: { itemsPerPage:10,currentPage:page}; let i = index">
+              <ng-container
+                *ngIf="(user.isAdmin === 'Não')&&(user.isTeacher === 'Não')&&(user.userAuthorization == true)">
+                <th scope="row">{{id[i]}}</th>
+                <td> {{user.fullname}} </td>
+                <td> {{user.birthdate | date: 'dd/MM/yyyy'}}</td>
+                <td> {{user.email}}</td>
+                <td> {{user.phoneNumber}}</td>
+                <td> {{user.classroom}}</td>
+                <td> {{user.country}}</td>
+                <td> {{user.state}}</td>
+                <td> {{user.isTeacher}}</td>
+                <td> {{user.isAdmin}}</td>
+                <td *ngIf="user.userAuthorization == true"> Ativo</td>
+                <td *ngIf="user.userAuthorization == false"> Inativo</td>
+                <td>
+                  <button class="btn btn-sm btn-outline-primary" (click)="openUpdateUserModal(user)">
+                    Editar
+                  </button>
+                </td>
+              </ng-container>
+
+            </tr>
+          </tbody>
+        </table>
+
+        <pagination-controls (pageChange)="page = $event" previousLabel="Anterior" nextLabel="Próximo">
+        </pagination-controls>
+      </div>
+      <div class="tab-pane fade" id="v-pills-inativos" role="tabpanel" aria-labelledby="v-pills-inativos-tab">
+        <h1 class="h1_controle_admin">Controle de Usuários</h1>
+
+        <div>
+          <input class="form mb-3" type="text" name="term" [(ngModel)]="term" placeholder="pesquisar">
+        </div>
+
+        <table class="table table-striped table-responsive">
+          <thead style="color: white;">
+            <tr>
+              <th scope="col">Id</th>
+              <th scope="col">Nome</th>
+              <th scope="col">Data de Nascimento</th>
+              <th scope="col">E-mail</th>
+              <th scope="col">Telefone</th>
+              <th scope="col">Turma</th>
+              <th scope="col">País</th>
+              <th scope="col">Estado</th>
+              <th scope="col">Prof</th>
+              <th scope="col">Admin</th>
+              <th scope="col">Status</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let user of User | filter : term | orderBy: key: reverse | paginate: { itemsPerPage:10,currentPage:page}; let i = index">
+              <ng-container *ngIf="user.userAuthorization == false">
+                <th scope="row">{{id[i]}}</th>
+                <td> {{user.fullname}} </td>
+                <td> {{user.birthdate | date: 'dd/MM/yyyy'}}</td>
+                <td> {{user.email}}</td>
+                <td> {{user.phoneNumber}}</td>
+                <td> {{user.classroom}}</td>
+                <td> {{user.country}}</td>
+                <td> {{user.state}}</td>
+                <td> {{user.isTeacher}}</td>
+                <td> {{user.isAdmin}}</td>
+                <td *ngIf="user.userAuthorization === true"> Ativo</td>
+                <td *ngIf="user.userAuthorization === false"> Inativo</td>
+                <td>
+                  <button class="btn btn-sm btn-outline-primary" (click)="openUpdateUserModal(user)">
+                    Editar
+                  </button>
+                </td>
+              </ng-container>
+
+            </tr>
+          </tbody>
+        </table>
+
+        <pagination-controls (pageChange)="page = $event" previousLabel="Anterior" nextLabel="Próximo">
+        </pagination-controls>
+      </div>
+    </div>
+  </div>
+
+
+</div>

@@ -1,0 +1,46 @@
+<div class="conteiner-chat overflow-auto">
+
+    <div>
+        <p class="h-line"></p>
+        <div *ngIf="allMessages$ | async as user; else spinner"></div>
+        <div class="row px-3">
+            <div class="col col-12 my-1 px-0" *ngFor="let mensagem of allMessages$ | async ">
+                <div class=" mx-2">
+                    <div [appFloat]="mensagem.uid" class="alert-success rounded px-4 py-2">
+                        <p>
+                            {{ mensagem.texto }}
+                        </p>
+                        <small> Enviado por {{ mensagem.nome }} às {{ mensagem.dataHora | date: 'HH:mm' }}</small>
+
+                        <button (click)="deleteMensagem(mensagem)" class="card-link btn btn-outline-danger btn-sm ml-2"
+                            [appEsconde]="mensagem.uid">
+                            Apagar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <form #addMensagemForm="ngForm" class="row input-grp mt-2 px-2" (ngSubmit)="onSubmit()">
+            <div class="col-10 text-center p-0">
+                <textarea name="mensagem" id="inputMensagem" [(ngModel)]="mensagem.texto" required>
+                </textarea>
+            </div>
+            <div class="col-2 p-0">
+                <button type="submit" class="btn btn-warning botao-enviar" [disabled]="!addMensagemForm.form.valid">
+                    Enviar
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <ng-template #spinner>
+        <div class="d-flex align-items-center">
+            <strong>Carregando...</strong>
+            <div class="spinner-border ml-auto text-primary" role="status" aria-hidden="true"></div>
+        </div>
+    
+    </ng-template>
+
+</div>
+

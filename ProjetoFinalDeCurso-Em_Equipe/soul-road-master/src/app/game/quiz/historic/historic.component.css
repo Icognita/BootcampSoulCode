@@ -1,0 +1,51 @@
+.imagem_perfil_ranking{
+    width: 150px;
+}
+
+.titulo_ranking{
+    font-weight: 900;
+    letter-spacing: 5px;
+}
+
+.bg_azul{
+    background: #3F97D3 !important;
+    color: white;
+}
+
+.classificacao_principal{
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.imagem_perfil_ranking_menor{
+    width: 120px;
+}
+
+.nome_individuo{
+    color: #FAC100;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.pontuacao_individuo{
+    font-weight: 900;
+    font-size: 1.5rem;
+}
+
+.colocacao{
+    color: #FAC100;
+    background: #3F97D3;
+    padding: 20px;
+    border-radius: 50%;
+    font-weight: 900;
+}
+
+.container_ranking{
+    border-radius: 20px;
+    padding: 20px;
+    min-width: 40%;
+}
+
+img{
+    border-radius: 50%;
+}

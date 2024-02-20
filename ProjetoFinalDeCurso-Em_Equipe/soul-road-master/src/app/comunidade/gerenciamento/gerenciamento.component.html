@@ -1,0 +1,56 @@
+<app-navbar></app-navbar>
+
+<div class="container-fluid">
+
+    <div class="row mt-5" *ngIf="usuario.isAdmin === 'Sim'">
+
+        <div class="col-md-4 mt-4">
+            <div class="card d-flex justify-content-center align-items-center">
+                <a routerLink="add-categoria">Adicionar Selos</a>
+            </div>
+        </div>
+
+        <div class="col-md-4 mt-4">
+            <div class="card d-flex justify-content-center align-items-center">
+                <a routerLink="add-categoriaDesafios">Adicionar Categoria de Desafios</a>
+            </div>
+        </div>
+
+        <div class="col-md-4 mt-4">
+            <div class="card d-flex justify-content-center align-items-center">
+                <a routerLink="turmas">Adicionar novas Turmas</a>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row mt-4">
+
+        <div class="col-md-3 mt-4">
+            <div class="card d-flex justify-content-center align-items-center">
+                <a routerLink="usuarios">Usuários</a>
+            </div>
+        </div>
+
+        <div class="col-md-3 mt-4">
+            <div class="card d-flex justify-content-center align-items-center">
+                <a routerLink="add-quiz">Adicionar Quiz</a>
+            </div>
+        </div>
+
+        <div class="col-md-3 mt-4">
+            <div class="card d-flex justify-content-center align-items-center">
+                <a routerLink="add-desafio">Adicionar Desafios</a>
+            </div>
+        </div>
+
+        <div class="col-md-3 mt-4">
+            <div class="card d-flex justify-content-center align-items-center">
+                <a routerLink="respostas">Respostas dos Desafios</a>
+            </div>
+        </div>
+
+    </div>
+
+
+</div>

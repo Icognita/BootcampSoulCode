@@ -1,0 +1,30 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Adicionar resposta</h4>
+  
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  
+  <form #addRespostaForm="ngForm" (ngSubmit)="onSubmit()">  
+    <div class="modal-body">
+      <div class="form-group">  
+        <label for="inputComent">Comentário</label>  
+        <textarea class="form-control" id="inputComent" rows="3" name="texto" placeholder="Deixe um comentário aqui."
+        [(ngModel)]="resposta.texto" required></textarea>
+      </div>
+  
+      <div class="custom-file">
+        <input #inputArquivo type="file" class="custom-file-input" id="customFile" name="arquivo" accept=".rar,.zip"
+          (change)="changeArquivo(inputArquivo.files)" required />
+        <label class="custom-file-label" for="customFile">Escolher arquivo</label>
+        <label id="customFileLabel"></label>
+      </div>
+    </div>
+    
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-primary" [disabled]="!addRespostaForm.form.valid || arquivo === null">  
+        Adicionar
+      </button>
+    </div>
+  </form>

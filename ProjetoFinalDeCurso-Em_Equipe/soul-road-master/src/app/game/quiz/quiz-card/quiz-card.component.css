@@ -1,0 +1,92 @@
+.container-fluid{
+    background: #8ed4dd;
+    min-height: 100vh;
+}
+
+.container_pergunta{
+    background: white;
+    width: 80%;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+h5{
+    font-size: 1.3rem;
+    font-weight: 900;
+}
+
+.container_resposta{
+    background: white;
+    padding: 10px;
+    border-bottom-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+.resposta{
+    font-weight: 300;
+}
+
+h1{
+    font-weight: bolder;
+}
+
+.progress{
+    width: 80%;
+    height: 30px;
+    background: transparent;
+    border: 3px solid #fff;
+    border-radius: 20px;
+}
+
+.progress-bar{
+    background: #FAC100;
+}
+
+.false_class{
+    text-decoration: line-through;
+    color: rgb(255, 44, 44);
+    font-weight: bold;
+}
+
+.true_class{
+    color: rgb(0, 180, 0);
+    font-weight: bold;
+}
+
+h5 button{
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    min-width: 130px;
+}
+
+.acerto_alerta, .erro_alerta{
+    background: rgb(0, 180, 0);
+    border-radius: 10px;
+    color: white;
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+}
+
+.erro_alerta{
+    background: rgb(255, 44, 44);
+}
+
+.contador{
+    width: 40px;
+    border-radius: 50%;
+    border: 2px solid rgb(235, 190, 12);
+    background-color: rgb(237, 218, 183);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 5px;
+    padding-bottom: 5px; 
+    margin-bottom: 0; 
+}
+
+.contador p{
+    margin: 0;
+    font-weight: 1000 !important;
+}

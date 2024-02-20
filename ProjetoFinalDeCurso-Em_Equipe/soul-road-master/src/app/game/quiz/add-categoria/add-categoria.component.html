@@ -1,0 +1,33 @@
+<app-navbar></app-navbar>
+
+<main class="container">
+    <div class="mt-5">
+        <h2 class="text-center my-2 tituloSelo">ADICIONAR NOVO SELO</h2>
+        <button routerLink="/gerenciamento" type="submit" class="btn btn-primary my-2 float-rigth">Voltar</button>
+    </div>
+
+    <div class="container-categoria d-flex align-items-center mt-5 p-2">
+        <form #addQuizForm="ngForm" class="container" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+                <label for="assuntoSelo" class="assuntoSelo">Assunto(Tecnologia)</label>
+                <input type="text" class="form-control" id="assuntoSelo" name="assunto" [(ngModel)]="categoria.assunto"
+                    required />
+            </div>
+            <div class="custom-file mb-2">
+                <input #inputImage type="file" class="custom-file-input" id="customFile" name="image" accept=".png,.jpg"
+                    (change)=" fileChangeEvent($event)" required />
+                <label class="custom-file-label" for="customFile" id="customFileLabel">Escolher selo</label>
+            </div>
+
+            <!-- Cropper (experimental) -->
+                <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true" [aspectRatio]="1 / 1"
+                format="png" (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded()"
+                (cropperReady)="cropperReady()" (loadImageFailed)="loadImageFailed()"></image-cropper>          
+            <!-- FIM Cropper  -->
+
+            <button type="submit" [disabled]="" class="btn btn-primary mt-2">
+                Adicionar
+            </button>
+        </form>
+    </div>
+</main>
