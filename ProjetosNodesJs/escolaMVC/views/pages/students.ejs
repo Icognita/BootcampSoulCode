@@ -1,0 +1,74 @@
+<%- include('../partials/header'); %>
+
+    <main class="container">
+        <div class="row">
+            <div class="col">
+                <article class="row mt-5">
+                    <section class="col-6">
+                        <h1>List of students</h1>
+                    </section>
+                    <section class="col-6">
+                        <a href="/students/add" class="btn btn-primary">Add new student</a>
+                    </section>
+                </article>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>
+                                Name
+                            </th>
+                            <th>
+                                Class
+                            </th>
+                            <th>
+                                Status
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <% if (items.length==0) { %>
+                            <div class="alert alert-warning"> Não existem dados cadastrados.</div>
+
+                            <% } else {%>
+                                <% items.forEach(element=> { %>
+                                    <tr>
+                                        <td class="align-middle">
+                                            <%= element.name %>
+
+                                        </td>
+                                        <td class="text-center align-middle">
+                                            <%= element.class %>
+
+                                        </td>
+                                        <td class="text-center align-middle">
+                                            <%= element.status %>
+
+                                        </td>
+                                        <td class="col-2">
+                                            <div class="row">
+                                                <form class="form col-6 p-0" action="/students/edit/<%= element._id %>"
+                                                    method="POST">
+                                                    <button type="submit"
+                                                        class="btn btn-warning form-group col-11">Edit</button>
+                                                </form>
+                                                <form class="form col-6 p-0" action="/students/delete/<%= element._id %>"
+                                                    method="POST">
+                                                    <button type="submit"
+                                                        class="btn btn-danger form-group col-11">Delete</button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <% }) %>
+
+                                        <% }%>
+
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <%- include('../partials/footer'); %>

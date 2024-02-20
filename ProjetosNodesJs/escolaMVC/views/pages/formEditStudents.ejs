@@ -1,0 +1,33 @@
+<%- include('../partials/header'); %>
+<div class="container">
+  <div class="row">
+      <div class="col">
+          <h1 class="mt-5">Register student:</h1>
+          <form action="/students/add" method="POST">
+              <div class="form-group">
+                  <label for="inputName">Full name:</label>
+                  <input class="form-control" type="text" id="inputName" name="name" placeholder="student`s name">
+              </div>
+              <div class="form-group">
+                  <label for="class">Class:</label>
+                  <input class="form-control" type="text" id="class" name="class" placeholder="1B">
+              </div>
+              <div class="form-group">
+                  <label for="g1">Grade 1:</label>
+                  <input class="form-control" type="text" id="g1" name="g1" placeholder="0-10">
+              </div>
+              <div class="form-group">
+                  <label for="g2">Grade 2:</label>
+                  <input class="form-control" type="text" id="g2" name="g2" placeholder="0-10">
+              </div>
+              <div class="form-group">
+                  <label for="g3">Grade 3:</label>
+                  <input class="form-control" type="text" id="g3" name="g3" placeholder="0-10">
+              </div>
+
+              <button class="btn btn-primary" type="submit">Add student</button>
+          </form>
+      </div>
+  </div>
+</div>
+  <%- include('../partials/footer'); %>

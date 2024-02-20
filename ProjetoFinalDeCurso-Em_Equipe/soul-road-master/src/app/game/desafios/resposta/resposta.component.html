@@ -1,0 +1,41 @@
+<app-navbar></app-navbar>
+
+<main class="container mt-4">
+    <div class="row">
+  
+      <div class="col-12 col-md-8">
+  
+        <div class="linha_divisao"></div>
+  
+        <div *ngIf="allRespostas$ | async as user; else spinner"></div>
+  
+        <div class="post" *ngFor="let resposta of allRespostas$ | async">
+          <div class="perfil_post d-flex align-items-center">
+            <!-- <img [src]="usuario.picProfile" alt="pic" class="img-fluid img_perfil"> -->
+            <div class="textos_post">
+              <h5 class="nome_pessoa_post">{{ resposta.nome }}</h5>
+              <p>Turma BCW5 - Web Full Stack</p>
+              <small> Criado por {{ resposta.nome }} </small>
+            </div>
+          </div>  
+          <div class="d-flex justify-content-center">
+            <div class="linha_divisao_post"></div>
+          </div>  
+          <div class="corpo_post">
+            <p class="paragrafo_post">
+              {{ resposta.texto }}
+            </p>
+            <a [href]="resposta.arquivoResposta">Clique para baixar o arquivo.</a>
+          </div>
+        </div>
+      </div> 
+  
+      <ng-template #spinner>
+        <div class="d-flex align-items-center">
+          <strong>Carregando...</strong>
+          <div class="spinner-border ml-auto text-primary" role="status" aria-hidden="true"></div>
+        </div>
+      </ng-template>
+  
+    </div>
+  </main>

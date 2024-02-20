@@ -1,0 +1,64 @@
+<section class="container my-5 d-flex justify-content-center">
+  
+  <div class="container-login px-5 d-flex flex-column justify-content-center">
+    <img class="pb-4 px-5 img-fluid" src="../../../assets/logo.png">
+    <p class="text-center">
+      Faça login em sua conta da SoulRoad!
+    </p>
+    <p class="h-divider"></p>
+    <form #loginForm="ngForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="inputEmail1" autoComplete="off"></label>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <div class="input-group-text">
+              <span style="font-size: 1.2rem;" class="iconify" data-icon="ic:outline-email"></span>
+            </div>
+          </div>
+          <input type="email" class="form-control" id="inputEmail1" placeholder="Email" name="email" required
+            [(ngModel)]="data.email">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inputPassword1"></label>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <div class="input-group-text">
+              <span style="font-size: 1.2rem;" class="iconify" data-icon="bx:bx-lock"></span>
+            </div>
+          </div>
+          <input type="password" class="form-control" id="inputPassword1" placeholder="Senha" name="password"
+            minlength="8" [(ngModel)]="data.password" required required>
+        </div>
+      </div>
+      <div *ngIf="loginError">
+        <ngb-alert type="danger" [dismissible]="false">{{ loginError }}</ngb-alert>
+      </div>      
+      <p> <a class="login-links" routerLink="/redefinir">Esqueci a senha</a> </p>
+      <div class="col text-center">
+        <button type="submit" class="btn btn-warning mt-1" [disabled]="!loginForm.form.valid">
+          Entrar
+        </button>
+      </div>
+    </form>
+    <p class="mt-4 text-center"> Não tem uma conta? <a class="login-links" routerLink="/cadastro">Cadastre-se!</a> </p>
+  </div>
+</section>
+
+<div class="footer_home container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="links d-flex justify-content-around align-items-center">
+        <img class="logo_footer" src="../../../assets/logo-dark.png">
+        <a href="https://soulcodeacademy.org/" target="_blank">Sobre</a>
+        <a href="https://soulcodeacademy.org/" target="_blank">Termos de Serviço</a>
+        <a href="https://soulcodeacademy.org/" target="_blank">Políticas de Privacidade</a>
+      </div>
+      <div class="linha_amarela"></div>
+      <p class="copyright text-center">
+        <b>SOULCODE ACADEMY &copy; 2021</b> <br>
+        Rua Helena, 235 Conj 111, 11ª andar - Vila Olímpia - São Paulo/SP - CEP: 04552-050
+      </p>
+    </div>
+  </div>
+</div>

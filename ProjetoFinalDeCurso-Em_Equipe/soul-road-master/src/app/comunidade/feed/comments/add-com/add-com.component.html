@@ -1,0 +1,28 @@
+<div class="modal-header">
+
+
+  <h4 class="modal-title" id="modal-basic-title">Adicionar comentário</h4>
+
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<form #addComentarioForm="ngForm" (ngSubmit)="onSubmit()">
+  <div class="modal-body">
+    <div class="form-group">
+
+      <label for="inputDiario1">Comentário</label>
+
+      <textarea class="form-control" id="inputDiario1" rows="3" name="diary" placeholder="Ex: Foi muito bom!"
+        [(ngModel)]="comentario.texto" required></textarea>
+
+    </div>
+
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-primary" [disabled]="!addComentarioForm.form.valid">
+      Adicionar
+    </button>
+  </div>
+</form>
+

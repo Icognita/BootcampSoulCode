@@ -1,0 +1,1770 @@
+<app-navbar></app-navbar>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12 d-flex align-items-center">
+            <img src="../../../assets/bannerQuiz.png" class="img-fluid imagem_add">
+            <div>
+                <h1 class="text-center titulo-add">VAMOS CRIAR UM QUIZ?</h1>
+                <div class="linha_amarela mt-3 mb-3"></div>
+                <p class="text-justify">
+                    Selecione uma categoria para seu quiz. Cada categoria possui seu selo próprio.<br>
+                    Escolha quantos pontos seu quiz valerá.<br>
+                    Em seguida, escolha quantas perguntas seu quiz terá, insira as perguntas e as respostas.<br>
+                    Não se esqueça de adicionar uma resposta correta!
+                    Para concluir, clique em 'Adicionar'.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <form #addQuizForm="ngForm" class="container mt-5" (ngSubmit)="onSubmit()">
+                <label for="assunto">Categoria: </label>
+                <mat-form-field>
+                    <mat-select name="assunto" id="assunto" class="form-select" [(ngModel)]="quiz.assunto" required>
+                        <mat-select-trigger>
+                            <ng-container *ngFor="let i of allCategoria | async"
+                                class="d-flex justify-content-center align-items-center">
+                                <ng-container *ngIf="quiz.assunto == i.assunto">
+                                    <p>{{i.assunto}}</p>
+                                    <img [src]="i.selo" class="img-thumbnail" alt="" style="width: 200px;">
+                                </ng-container>
+                            </ng-container>
+                        </mat-select-trigger>
+                        <mat-option *ngFor="let item of allCategoria | async" [value]="item.assunto"
+                            (click)="pegaValor(item.selo)">
+                            {{item.assunto}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <div class="form-group">
+                    <label for="pontos">Pontos</label>
+                    <select id="pontos" class="custom-select" name="pontuacao" [(ngModel)]="quiz.pontuacao" required>
+                        <option selected value="Selecione a pontuação">Selecione a pontuação</option>
+                        <option [value]="10">10</option>
+                        <option [value]="20">20</option>
+                        <option [value]="30">30</option>
+                        <option [value]="40">40</option>
+                        <option [value]="50">50</option>
+                        <option [value]="60">60</option>
+                        <option [value]="70">70</option>
+                        <option [value]="80">80</option>
+                        <option [value]="90">90</option>
+                        <option [value]="100">100</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputTitle1">Numero de perguntas</label>
+                    <select type="number" class="form-control" id="inputTitle1" name="numero de alternativas"
+                        [(ngModel)]="quiz.numeroPerguntas" (ngModelChange)="mudanca()" required>
+                        <option type="number" value="1">1</option>
+                        <option type="number" value="2">2</option>
+                        <option type="number" value="3">3</option>
+                        <option type="number" value="4">4</option>
+                        <option type="number" value="5">5</option>
+                        <option type="number" value="6">6</option>
+                        <option type="number" value="7">7</option>
+                        <option type="number" value="8">8</option>
+                        <option type="number" value="9">9</option>
+                        <option type="number" value="10">10</option>
+                    </select>
+                </div><hr>
+
+                <div *ngIf="quiz.numeroPerguntas == 1">
+                    <div>
+                        <input type="text" class="form-control" id="inputTitle1" name="numero de alternativas"
+                            placeholder="Pergunta" [(ngModel)]="quiz.perguntas[0].pergunta" (ngModelChange)="log()"
+                            required />
+
+                        <input type="text" class="form-control" id="inputTitle1" name="numero de alternativas"
+                            placeholder="Alternativa a" [(ngModel)]="quiz.perguntas[0].a" required />
+
+                        <input type="text" class="form-control" id="inputTitle1" name="numero de alternativas"
+                            placeholder="Alternativa b" [(ngModel)]="quiz.perguntas[0].b" required />
+
+                        <input type="text" class="form-control" id="inputTitle1" name="numero de alternativas"
+                            placeholder="Alternativa c" [(ngModel)]="quiz.perguntas[0].c" required />
+
+                        <input type="text" class="form-control" id="inputTitle1" name="numero de alternativas"
+                            placeholder="Alternativa d" [(ngModel)]="quiz.perguntas[0].d" required />
+
+                        <input type="text" class="form-control" id="inputTitle1" name="numero de alternativas"
+                            placeholder="Alternativa e" [(ngModel)]="quiz.perguntas[0].e" required />
+
+                        <label for="inputResposta" class="mt-2">Resposta:</label>
+                        <select type="text" class="form-control" id="inputResposta" name="numero de alternativas"
+                            placeholder="Resposta correta" [(ngModel)]="quiz.perguntas[0].respostaCerta" required>
+                            <option [value]="quiz.perguntas[0].a">{{quiz.perguntas[0].a}}</option>
+                            <option [value]="quiz.perguntas[0].b">{{quiz.perguntas[0].b}}</option>
+                            <option [value]="quiz.perguntas[0].c">{{quiz.perguntas[0].c}}</option>
+                            <option [value]="quiz.perguntas[0].d">{{quiz.perguntas[0].d}}</option>
+                            <option [value]="quiz.perguntas[0].e">{{quiz.perguntas[0].e}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div *ngIf="quiz.numeroPerguntas == 2">
+
+                    <div style="margin-bottom: 30px;">
+                        <input type="text" class="form-control" id="inputTitle1" name="a" placeholder="Pergunta"
+                            [(ngModel)]="quiz.perguntas[0].pergunta" required />
+
+                        <input type="text" class="form-control" id="inputTitle2" name="b" placeholder="Alternativa a"
+                            [(ngModel)]="quiz.perguntas[0].a" required />
+
+                        <input type="text" class="form-control" id="inputTitle3" name="c" placeholder="Alternativa b"
+                            [(ngModel)]="quiz.perguntas[0].b" required />
+
+                        <input type="text" class="form-control" id="inputTitle4" name="d" placeholder="Alternativa c"
+                            [(ngModel)]="quiz.perguntas[0].c" required />
+
+                        <input type="text" class="form-control" id="inputTitle5" name="e" placeholder="Alternativa d"
+                            [(ngModel)]="quiz.perguntas[0].d" required />
+
+                        <input type="text" class="form-control" id="inputTitle6" name="f" placeholder="Alternativa e"
+                            [(ngModel)]="quiz.perguntas[0].e" required />
+
+                        <label for="inputResposta" class="mt-2">Resposta:</label>
+                        <select type="text" class="form-control" id="inputResposta" name="numero de alternativas"
+                            placeholder="Resposta correta" [(ngModel)]="quiz.perguntas[0].respostaCerta" required>
+                            <option [value]="quiz.perguntas[0].a">{{quiz.perguntas[0].a}}</option>
+                            <option [value]="quiz.perguntas[0].b">{{quiz.perguntas[0].b}}</option>
+                            <option [value]="quiz.perguntas[0].c">{{quiz.perguntas[0].c}}</option>
+                            <option [value]="quiz.perguntas[0].d">{{quiz.perguntas[0].d}}</option>
+                            <option [value]="quiz.perguntas[0].e">{{quiz.perguntas[0].e}}</option>
+                        </select>
+                    </div>
+
+                    <div style="margin-bottom: 30px;">
+                        <input type="text" class="form-control" id="inputTitle8" name="h" placeholder="Pergunta"
+                            [(ngModel)]="quiz.perguntas[1].pergunta" required />
+
+                        <input type="text" class="form-control" id="inputTitle9" name="i" placeholder="Alternativa a"
+                            [(ngModel)]="quiz.perguntas[1].a" required />
+
+                        <input type="text" class="form-control" id="inputTitle10" name="j" placeholder="Alternativa b"
+                            [(ngModel)]="quiz.perguntas[1].b" required />
+
+                        <input type="text" class="form-control" id="inputTitle11" name="k" placeholder="Alternativa c"
+                            [(ngModel)]="quiz.perguntas[1].c" required />
+
+                        <input type="text" class="form-control" id="inputTitle12" name="l" placeholder="Alternativa d"
+                            [(ngModel)]="quiz.perguntas[1].d" required />
+
+                        <input type="text" class="form-control" id="inputTitle13" name="m" placeholder="Alternativa e"
+                            [(ngModel)]="quiz.perguntas[1].e" required />
+
+                        <label for="inputResposta1" class="mt-2">Resposta:</label>
+                        <select type="text" class="form-control" id="inputResposta1" name="numero de alternativas"
+                            placeholder="Resposta correta" [(ngModel)]="quiz.perguntas[1].respostaCerta" required>
+                            <option [value]="quiz.perguntas[1].a">{{quiz.perguntas[1].a}}</option>
+                            <option [value]="quiz.perguntas[1].b">{{quiz.perguntas[1].b}}</option>
+                            <option [value]="quiz.perguntas[1].c">{{quiz.perguntas[1].c}}</option>
+                            <option [value]="quiz.perguntas[1].d">{{quiz.perguntas[1].d}}</option>
+                            <option [value]="quiz.perguntas[1].e">{{quiz.perguntas[1].e}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div *ngIf="quiz.numeroPerguntas == 3">
+
+                    <div style="margin-bottom: 30px;">
+                        <input type="text" class="form-control" id="inputTitle1" name="a" placeholder="Pergunta"
+                            [(ngModel)]="quiz.perguntas[0].pergunta" required />
+
+                        <input type="text" class="form-control" id="inputTitle2" name="b" placeholder="Alternativa a"
+                            [(ngModel)]="quiz.perguntas[0].a" required />
+
+                        <input type="text" class="form-control" id="inputTitle3" name="c" placeholder="Alternativa b"
+                            [(ngModel)]="quiz.perguntas[0].b" required />
+
+                        <input type="text" class="form-control" id="inputTitle4" name="d" placeholder="Alternativa c"
+                            [(ngModel)]="quiz.perguntas[0].c" required />
+
+                        <input type="text" class="form-control" id="inputTitle5" name="e" placeholder="Alternativa d"
+                            [(ngModel)]="quiz.perguntas[0].d" required />
+
+                        <input type="text" class="form-control" id="inputTitle6" name="f" placeholder="Alternativa e"
+                            [(ngModel)]="quiz.perguntas[0].e" required />
+
+                        <label for="inputResposta" class="mt-2">Resposta:</label>
+                        <select type="text" class="form-control" id="inputResposta" name="numero de alternativas"
+                            placeholder="Resposta correta" [(ngModel)]="quiz.perguntas[0].respostaCerta" required>
+                            <option [value]="quiz.perguntas[0].a">{{quiz.perguntas[0].a}}</option>
+                            <option [value]="quiz.perguntas[0].b">{{quiz.perguntas[0].b}}</option>
+                            <option [value]="quiz.perguntas[0].c">{{quiz.perguntas[0].c}}</option>
+                            <option [value]="quiz.perguntas[0].d">{{quiz.perguntas[0].d}}</option>
+                            <option [value]="quiz.perguntas[0].e">{{quiz.perguntas[0].e}}</option>
+                        </select>
+                    </div>
+
+                    <div style="margin-bottom: 30px;">
+                        <input type="text" class="form-control" id="inputTitle8" name="h" placeholder="Pergunta"
+                            [(ngModel)]="quiz.perguntas[1].pergunta" required />
+
+                        <input type="text" class="form-control" id="inputTitle9" name="i" placeholder="Alternativa a"
+                            [(ngModel)]="quiz.perguntas[1].a" required />
+
+                        <input type="text" class="form-control" id="inputTitle10" name="j" placeholder="Alternativa b"
+                            [(ngModel)]="quiz.perguntas[1].b" required />
+
+                        <input type="text" class="form-control" id="inputTitle11" name="k" placeholder="Alternativa c"
+                            [(ngModel)]="quiz.perguntas[1].c" required />
+
+                        <input type="text" class="form-control" id="inputTitle12" name="l" placeholder="Alternativa d"
+                            [(ngModel)]="quiz.perguntas[1].d" required />
+
+                        <input type="text" class="form-control" id="inputTitle13" name="m" placeholder="Alternativa e"
+                            [(ngModel)]="quiz.perguntas[1].e" required />
+
+                        <label for="inputResposta1" class="mt-2">Resposta:</label>
+                        <select type="text" class="form-control" id="inputResposta1" name="numero de alternativas"
+                            placeholder="Resposta correta" [(ngModel)]="quiz.perguntas[1].respostaCerta" required>
+                            <option [value]="quiz.perguntas[1].a">{{quiz.perguntas[1].a}}</option>
+                            <option [value]="quiz.perguntas[1].b">{{quiz.perguntas[1].b}}</option>
+                            <option [value]="quiz.perguntas[1].c">{{quiz.perguntas[1].c}}</option>
+                            <option [value]="quiz.perguntas[1].d">{{quiz.perguntas[1].d}}</option>
+                            <option [value]="quiz.perguntas[1].e">{{quiz.perguntas[1].e}}</option>
+                        </select>
+                    </div>
+
+                    <div style="margin-bottom: 30px;">
+                        <input type="text" class="form-control" id="inputTitle8" name="h" placeholder="Pergunta"
+                            [(ngModel)]="quiz.perguntas[2].pergunta" required />
+
+                        <input type="text" class="form-control" id="inputTitle9" name="i" placeholder="Alternativa a"
+                            [(ngModel)]="quiz.perguntas[2].a" required />
+
+                        <input type="text" class="form-control" id="inputTitle10" name="j" placeholder="Alternativa b"
+                            [(ngModel)]="quiz.perguntas[2].b" required />
+
+                        <input type="text" class="form-control" id="inputTitle11" name="k" placeholder="Alternativa c"
+                            [(ngModel)]="quiz.perguntas[2].c" required />
+
+                        <input type="text" class="form-control" id="inputTitle12" name="l" placeholder="Alternativa d"
+                            [(ngModel)]="quiz.perguntas[2].d" required />
+
+                        <input type="text" class="form-control" id="inputTitle13" name="m" placeholder="Alternativa e"
+                            [(ngModel)]="quiz.perguntas[2].e" required />
+
+                        <label for="inputResposta2" class="mt-2">Resposta:</label>
+                        <select type="text" class="form-control" id="inputResposta2" name="numero de alternativas"
+                            placeholder="Resposta correta" [(ngModel)]="quiz.perguntas[2].respostaCerta" required>
+                            <option [value]="quiz.perguntas[2].a">{{quiz.perguntas[2].a}}</option>
+                            <option [value]="quiz.perguntas[2].b">{{quiz.perguntas[2].b}}</option>
+                            <option [value]="quiz.perguntas[2].c">{{quiz.perguntas[2].c}}</option>
+                            <option [value]="quiz.perguntas[2].d">{{quiz.perguntas[2].d}}</option>
+                            <option [value]="quiz.perguntas[2].e">{{quiz.perguntas[2].e}}</option>
+                        </select>
+                    </div>
+                </div>
+
+
+                <div *ngIf="quiz.numeroPerguntas == 4">
+
+                    <div style="margin-bottom: 30px;">
+                        <input type="text" class="form-control" id="inputTitle1" name="a" placeholder="Pergunta"
+                            [(ngModel)]="quiz.perguntas[0].pergunta" required />
+
+                        <input type="text" class="form-control" id="inputTitle2" name="b" placeholder="Alternativa a"
+                            [(ngModel)]="quiz.perguntas[0].a" required />
+
+                        <input type="text" class="form-control" id="inputTitle3" name="c" placeholder="Alternativa b"
+                            [(ngModel)]="quiz.perguntas[0].b" required />
+
+                        <input type="text" class="form-control" id="inputTitle4" name="d" placeholder="Alternativa c"
+                            [(ngModel)]="quiz.perguntas[0].c" required />
+
+                        <input type="text" class="form-control" id="inputTitle5" name="e" placeholder="Alternativa d"
+                            [(ngModel)]="quiz.perguntas[0].d" required />
+
+                        <input type="text" class="form-control" id="inputTitle6" name="f" placeholder="Alternativa e"
+                            [(ngModel)]="quiz.perguntas[0].e" required />
+
+                        <label for="inputResposta" class="mt-2">Resposta:</label>
+                        <select type="text" class="form-control" id="inputResposta" name="numero de alternativas"
+                            placeholder="Resposta correta" [(ngModel)]="quiz.perguntas[0].respostaCerta" required>
+                            <option [value]="quiz.perguntas[0].a">{{quiz.perguntas[0].a}}</option>
+                            <option [value]="quiz.perguntas[0].b">{{quiz.perguntas[0].b}}</option>
+                            <option [value]="quiz.perguntas[0].c">{{quiz.perguntas[0].c}}</option>
+                            <option [value]="quiz.perguntas[0].d">{{quiz.perguntas[0].d}}</option>
+                            <option [value]="quiz.perguntas[0].e">{{quiz.perguntas[0].e}}</option>
+                        </select>
+                    </div>
+
+                    <div style="margin-bottom: 30px;">
+                        <input type="text" class="form-control" id="inputTitle8" name="h" placeholder="Pergunta"
+                            [(ngModel)]="quiz.perguntas[1].pergunta" required />
+
+                        <input type="text" class="form-control" id="inputTitle9" name="i" placeholder="Alternativa a"
+                            [(ngModel)]="quiz.perguntas[1].a" required />
+
+                        <input type="text" class="form-control" id="inputTitle10" name="j" placeholder="Alternativa b"
+                            [(ngModel)]="quiz.perguntas[1].b" required />
+
+                        <input type="text" class="form-control" id="inputTitle11" name="k" placeholder="Alternativa c"
+                            [(ngModel)]="quiz.perguntas[1].c" required />
+
+                        <input type="text" class="form-control" id="inputTitle12" name="l" placeholder="Alternativa d"
+                            [(ngModel)]="quiz.perguntas[1].d" required />
+
+                        <input type="text" class="form-control" id="inputTitle13" name="m" placeholder="Alternativa e"
+                            [(ngModel)]="quiz.perguntas[1].e" required />
+
+                        <label for="inputResposta1" class="mt-2">Resposta:</label>
+                        <select type="text" class="form-control" id="inputResposta1" name="numero de alternativas"
+                            placeholder="Resposta correta" [(ngModel)]="quiz.perguntas[1].respostaCerta" required>
+                            <option [value]="quiz.perguntas[1].a">{{quiz.perguntas[1].a}}</option>
+                            <option [value]="quiz.perguntas[1].b">{{quiz.perguntas[1].b}}</option>
+                            <option [value]="quiz.perguntas[1].c">{{quiz.perguntas[1].c}}</option>
+                            <option [value]="quiz.perguntas[1].d">{{quiz.perguntas[1].d}}</option>
+                            <option [value]="quiz.perguntas[1].e">{{quiz.perguntas[1].e}}</option>
+                        </select>
+                    </div>
+
+                    <div style="margin-bottom: 30px;">
+                        <input type="text" class="form-control" id="inputTitle8" name="h" placeholder="Pergunta"
+                            [(ngModel)]="quiz.perguntas[2].pergunta" required />
+
+                        <input type="text" class="form-control" id="inputTitle9" name="i" placeholder="Alternativa a"
+                            [(ngModel)]="quiz.perguntas[2].a" required />
+
+                        <input type="text" class="form-control" id="inputTitle10" name="j" placeholder="Alternativa b"
+                            [(ngModel)]="quiz.perguntas[2].b" required />
+
+                        <input type="text" class="form-control" id="inputTitle11" name="k" placeholder="Alternativa c"
+                            [(ngModel)]="quiz.perguntas[2].c" required />
+
+                        <input type="text" class="form-control" id="inputTitle12" name="l" placeholder="Alternativa d"
+                            [(ngModel)]="quiz.perguntas[2].d" required />
+
+                        <input type="text" class="form-control" id="inputTitle13" name="m" placeholder="Alternativa e"
+                            [(ngModel)]="quiz.perguntas[2].e" required />
+
+                        <label for="inputResposta2" class="mt-2">Resposta:</label>
+                        <select type="text" class="form-control" id="inputResposta2" name="numero de alternativas"
+                            placeholder="Resposta correta" [(ngModel)]="quiz.perguntas[2].respostaCerta" required>
+                            <option [value]="quiz.perguntas[2].a">{{quiz.perguntas[2].a}}</option>
+                            <option [value]="quiz.perguntas[2].b">{{quiz.perguntas[2].b}}</option>
+                            <option [value]="quiz.perguntas[2].c">{{quiz.perguntas[2].c}}</option>
+                            <option [value]="quiz.perguntas[2].d">{{quiz.perguntas[2].d}}</option>
+                            <option [value]="quiz.perguntas[2].e">{{quiz.perguntas[2].e}}</option>
+                        </select>
+                    </div>
+
+                    <div style="margin-bottom: 30px;">
+                        <input type="text" class="form-control" id="inputTitle8" name="h" placeholder="Pergunta"
+                            [(ngModel)]="quiz.perguntas[3].pergunta" required />
+
+                        <input type="text" class="form-control" id="inputTitle9" name="i" placeholder="Alternativa a"
+                            [(ngModel)]="quiz.perguntas[3].a" required />
+
+                        <input type="text" class="form-control" id="inputTitle10" name="j" placeholder="Alternativa b"
+                            [(ngModel)]="quiz.perguntas[3].b" required />
+
+                        <input type="text" class="form-control" id="inputTitle11" name="k" placeholder="Alternativa c"
+                            [(ngModel)]="quiz.perguntas[3].c" required />
+
+                        <input type="text" class="form-control" id="inputTitle12" name="l" placeholder="Alternativa d"
+                            [(ngModel)]="quiz.perguntas[3].d" required />
+
+                        <input type="text" class="form-control" id="inputTitle13" name="m" placeholder="Alternativa e"
+                            [(ngModel)]="quiz.perguntas[3].e" required />
+
+                        <label for="inputResposta3" class="mt-2">Resposta:</label>
+                        <select type="text" class="form-control" id="inputResposta3" name="numero de alternativas"
+                            placeholder="Resposta correta" [(ngModel)]="quiz.perguntas[3].respostaCerta" required>
+                            <option [value]="quiz.perguntas[3].a">{{quiz.perguntas[3].a}}</option>
+                            <option [value]="quiz.perguntas[3].b">{{quiz.perguntas[3].b}}</option>
+                            <option [value]="quiz.perguntas[3].c">{{quiz.perguntas[3].c}}</option>
+                            <option [value]="quiz.perguntas[3].d">{{quiz.perguntas[3].d}}</option>
+                            <option [value]="quiz.perguntas[3].e">{{quiz.perguntas[3].e}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div *ngIf="quiz.numeroPerguntas == 5">
+
+                    <div style="margin-bottom: 30px;">
+                        <input type="text" class="form-control" id="inputTitle1" name="a" placeholder="Pergunta"
+                            [(ngModel)]="quiz.perguntas[0].pergunta" required />
+
+                        <input type="text" class="form-control" id="inputTitle2" name="b" placeholder="Alternativa a"
+                            [(ngModel)]="quiz.perguntas[0].a" required />
+
+                        <input type="text" class="form-control" id="inputTitle3" name="c" placeholder="Alternativa b"
+                            [(ngModel)]="quiz.perguntas[0].b" required />
+
+                        <input type="text" class="form-control" id="inputTitle4" name="d" placeholder="Alternativa c"
+                            [(ngModel)]="quiz.perguntas[0].c" required />
+
+                        <input type="text" class="form-control" id="inputTitle5" name="e" placeholder="Alternativa d"
+                            [(ngModel)]="quiz.perguntas[0].d" required />
+
+                        <input type="text" class="form-control" id="inputTitle6" name="f" placeholder="Alternativa e"
+                            [(ngModel)]="quiz.perguntas[0].e" required />
+
+                            <label for="inputResposta" class="mt-2">Resposta:</label>
+                            <select type="text" class="form-control" id="inputResposta" name="numero de alternativas"
+                                placeholder="Resposta correta" [(ngModel)]="quiz.perguntas[0].respostaCerta" required>
+                                <option [value]="quiz.perguntas[0].a">{{quiz.perguntas[0].a}}</option>
+                                <option [value]="quiz.perguntas[0].b">{{quiz.perguntas[0].b}}</option>
+                                <option [value]="quiz.perguntas[0].c">{{quiz.perguntas[0].c}}</option>
+                                <option [value]="quiz.perguntas[0].d">{{quiz.perguntas[0].d}}</option>
+                                <option [value]="quiz.perguntas[0].e">{{quiz.perguntas[0].e}}</option>
+                            </select>
+                    </div>
+
+                    <div style="margin-bottom: 30px;">
+                        <input type="text" class="form-control" id="inputTitle8" name="h" placeholder="Pergunta"
+                            [(ngModel)]="quiz.perguntas[1].pergunta" required />
+
+                        <input type="text" class="form-control" id="inputTitle9" name="i" placeholder="Alternativa a"
+                            [(ngModel)]="quiz.perguntas[1].a" required />
+
+                        <input type="text" class="form-control" id="inputTitle10" name="j" placeholder="Alternativa b"
+                            [(ngModel)]="quiz.perguntas[1].b" required />
+
+                        <input type="text" class="form-control" id="inputTitle11" name="k" placeholder="Alternativa c"
+                            [(ngModel)]="quiz.perguntas[1].c" required />
+
+                        <input type="text" class="form-control" id="inputTitle12" name="l" placeholder="Alternativa d"
+                            [(ngModel)]="quiz.perguntas[1].d" required />
+
+                        <input type="text" class="form-control" id="inputTitle13" name="m" placeholder="Alternativa e"
+                            [(ngModel)]="quiz.perguntas[1].e" required />
+
+                            <label for="inputResposta1" class="mt-2">Resposta:</label>
+                            <select type="text" class="form-control" id="inputResposta1" name="numero de alternativas"
+                                placeholder="Resposta correta" [(ngModel)]="quiz.perguntas[1].respostaCerta" required>
+                                <option [value]="quiz.perguntas[1].a">{{quiz.perguntas[1].a}}</option>
+                                <option [value]="quiz.perguntas[1].b">{{quiz.perguntas[1].b}}</option>
+                                <option [value]="quiz.perguntas[1].c">{{quiz.perguntas[1].c}}</option>
+                                <option [value]="quiz.perguntas[1].d">{{quiz.perguntas[1].d}}</option>
+                                <option [value]="quiz.perguntas[1].e">{{quiz.perguntas[1].e}}</option>
+                            </select>
+                    </div>
+
+                    <div style="margin-bottom: 30px;">
+                        <input type="text" class="form-control" id="inputTitle8" name="h" placeholder="Pergunta"
+                            [(ngModel)]="quiz.perguntas[2].pergunta" required />
+
+                        <input type="text" class="form-control" id="inputTitle9" name="i" placeholder="Alternativa a"
+                            [(ngModel)]="quiz.perguntas[2].a" required />
+
+                        <input type="text" class="form-control" id="inputTitle10" name="j" placeholder="Alternativa b"
+                            [(ngModel)]="quiz.perguntas[2].b" required />
+
+                        <input type="text" class="form-control" id="inputTitle11" name="k" placeholder="Alternativa c"
+                            [(ngModel)]="quiz.perguntas[2].c" required />
+
+                        <input type="text" class="form-control" id="inputTitle12" name="l" placeholder="Alternativa d"
+                            [(ngModel)]="quiz.perguntas[2].d" required />
+
+                        <input type="text" class="form-control" id="inputTitle13" name="m" placeholder="Alternativa e"
+                            [(ngModel)]="quiz.perguntas[2].e" required />
+
+                            <select type="text" class="form-control" id="inputResposta2" name="numero de alternativas"
+                            placeholder="Resposta correta" [(ngModel)]="quiz.perguntas[2].respostaCerta" required>
+                            <option [value]="quiz.perguntas[2].a">{{quiz.perguntas[2].a}}</option>
+                            <option [value]="quiz.perguntas[2].b">{{quiz.perguntas[2].b}}</option>
+                            <option [value]="quiz.perguntas[2].c">{{quiz.perguntas[2].c}}</option>
+                            <option [value]="quiz.perguntas[2].d">{{quiz.perguntas[2].d}}</option>
+                            <option [value]="quiz.perguntas[2].e">{{quiz.perguntas[2].e}}</option>
+                        </select>
+                    </div>
+
+                    <div style="margin-bottom: 30px;">
+                        <input type="text" class="form-control" id="inputTitle8" name="h" placeholder="Pergunta"
+                            [(ngModel)]="quiz.perguntas[3].pergunta" required />
+
+                        <input type="text" class="form-control" id="inputTitle9" name="i" placeholder="Alternativa a"
+                            [(ngModel)]="quiz.perguntas[3].a" required />
+
+                        <input type="text" class="form-control" id="inputTitle10" name="j" placeholder="Alternativa b"
+                            [(ngModel)]="quiz.perguntas[3].b" required />
+
+                        <input type="text" class="form-control" id="inputTitle11" name="k" placeholder="Alternativa c"
+                            [(ngModel)]="quiz.perguntas[3].c" required />
+
+                        <input type="text" class="form-control" id="inputTitle12" name="l" placeholder="Alternativa d"
+                            [(ngModel)]="quiz.perguntas[3].d" required />
+
+                        <input type="text" class="form-control" id="inputTitle13" name="m" placeholder="Alternativa e"
+                            [(ngModel)]="quiz.perguntas[3].e" required />
+
+                            <label for="inputResposta3" class="mt-2">Resposta:</label>
+                            <select type="text" class="form-control" id="inputResposta3" name="numero de alternativas"
+                                placeholder="Resposta correta" [(ngModel)]="quiz.perguntas[3].respostaCerta" required>
+                                <option [value]="quiz.perguntas[3].a">{{quiz.perguntas[3].a}}</option>
+                                <option [value]="quiz.perguntas[3].b">{{quiz.perguntas[3].b}}</option>
+                                <option [value]="quiz.perguntas[3].c">{{quiz.perguntas[3].c}}</option>
+                                <option [value]="quiz.perguntas[3].d">{{quiz.perguntas[3].d}}</option>
+                                <option [value]="quiz.perguntas[3].e">{{quiz.perguntas[3].e}}</option>
+                            </select>
+                    </div>
+
+                    <div style="margin-bottom: 30px;">
+                        <input type="text" class="form-control" id="inputTitle8" name="h" placeholder="Pergunta"
+                            [(ngModel)]="quiz.perguntas[4].pergunta" required />
+
+                        <input type="text" class="form-control" id="inputTitle9" name="i" placeholder="Alternativa a"
+                            [(ngModel)]="quiz.perguntas[4].a" required />
+
+                        <input type="text" class="form-control" id="inputTitle10" name="j" placeholder="Alternativa b"
+                            [(ngModel)]="quiz.perguntas[4].b" required />
+
+                        <input type="text" class="form-control" id="inputTitle11" name="k" placeholder="Alternativa c"
+                            [(ngModel)]="quiz.perguntas[4].c" required />
+
+                        <input type="text" class="form-control" id="inputTitle12" name="l" placeholder="Alternativa d"
+                            [(ngModel)]="quiz.perguntas[4].d" required />
+
+                        <input type="text" class="form-control" id="inputTitle13" name="m" placeholder="Alternativa e"
+                            [(ngModel)]="quiz.perguntas[4].e" required />
+
+                            <label for="inputResposta4" class="mt-2">Resposta:</label>
+                            <select type="text" class="form-control" id="inputResposta4" name="numero de alternativas"
+                                placeholder="Resposta correta" [(ngModel)]="quiz.perguntas[4].respostaCerta" required>
+                                <option [value]="quiz.perguntas[4].a">{{quiz.perguntas[4].a}}</option>
+                                <option [value]="quiz.perguntas[4].b">{{quiz.perguntas[4].b}}</option>
+                                <option [value]="quiz.perguntas[4].c">{{quiz.perguntas[4].c}}</option>
+                                <option [value]="quiz.perguntas[4].d">{{quiz.perguntas[4].d}}</option>
+                                <option [value]="quiz.perguntas[4].e">{{quiz.perguntas[4].e}}</option>
+                            </select>
+                    </div>
+                </div>
+
+                <div *ngIf="quiz.numeroPerguntas == 6">
+
+                    <div style="margin-bottom: 30px;">
+                        <input type="text" class="form-control" id="inputTitle1" name="a" placeholder="Pergunta"
+                            [(ngModel)]="quiz.perguntas[0].pergunta" required />
+
+                        <input type="text" class="form-control" id="inputTitle2" name="b" placeholder="Alternativa a"
+                            [(ngModel)]="quiz.perguntas[0].a" required />
+
+                        <input type="text" class="form-control" id="inputTitle3" name="c" placeholder="Alternativa b"
+                            [(ngModel)]="quiz.perguntas[0].b" required />
+
+                        <input type="text" class="form-control" id="inputTitle4" name="d" placeholder="Alternativa c"
+                            [(ngModel)]="quiz.perguntas[0].c" required />
+
+                        <input type="text" class="form-control" id="inputTitle5" name="e" placeholder="Alternativa d"
+                            [(ngModel)]="quiz.perguntas[0].d" required />
+
+                        <input type="text" class="form-control" id="inputTitle6" name="f" placeholder="Alternativa e"
+                            [(ngModel)]="quiz.perguntas[0].e" required />
+
+                            <label for="inputResposta" class="mt-2">Resposta:</label>
+                            <select type="text" class="form-control" id="inputResposta" name="numero de alternativas"
+                                placeholder="Resposta correta" [(ngModel)]="quiz.perguntas[0].respostaCerta" required>
+                                <option [value]="quiz.perguntas[0].a">{{quiz.perguntas[0].a}}</option>
+                                <option [value]="quiz.perguntas[0].b">{{quiz.perguntas[0].b}}</option>
+                                <option [value]="quiz.perguntas[0].c">{{quiz.perguntas[0].c}}</option>
+                                <option [value]="quiz.perguntas[0].d">{{quiz.perguntas[0].d}}</option>
+                                <option [value]="quiz.perguntas[0].e">{{quiz.perguntas[0].e}}</option>
+                            </select>
+                    </div>
+
+                    <div style="margin-bottom: 30px;">
+                        <input type="text" class="form-control" id="inputTitle8" name="h" placeholder="Pergunta"
+                            [(ngModel)]="quiz.perguntas[1].pergunta" required />
+
+                        <input type="text" class="form-control" id="inputTitle9" name="i" placeholder="Alternativa a"
+                            [(ngModel)]="quiz.perguntas[1].a" required />
+
+                        <input type="text" class="form-control" id="inputTitle10" name="j" placeholder="Alternativa b"
+                            [(ngModel)]="quiz.perguntas[1].b" required />
+
+                        <input type="text" class="form-control" id="inputTitle11" name="k" placeholder="Alternativa c"
+                            [(ngModel)]="quiz.perguntas[1].c" required />
+
+                        <input type="text" class="form-control" id="inputTitle12" name="l" placeholder="Alternativa d"
+                            [(ngModel)]="quiz.perguntas[1].d" required />
+
+                        <input type="text" class="form-control" id="inputTitle13" name="m" placeholder="Alternativa e"
+                            [(ngModel)]="quiz.perguntas[1].e" required />
+
+                            <label for="inputResposta1" class="mt-2">Resposta:</label>
+                            <select type="text" class="form-control" id="inputResposta1" name="numero de alternativas"
+                                placeholder="Resposta correta" [(ngModel)]="quiz.perguntas[1].respostaCerta" required>
+                                <option [value]="quiz.perguntas[1].a">{{quiz.perguntas[1].a}}</option>
+                                <option [value]="quiz.perguntas[1].b">{{quiz.perguntas[1].b}}</option>
+                                <option [value]="quiz.perguntas[1].c">{{quiz.perguntas[1].c}}</option>
+                                <option [value]="quiz.perguntas[1].d">{{quiz.perguntas[1].d}}</option>
+                                <option [value]="quiz.perguntas[1].e">{{quiz.perguntas[1].e}}</option>
+                            </select>
+                    </div>
+
+                    <div style="margin-bottom: 30px;">
+                        <input type="text" class="form-control" id="inputTitle8" name="h" placeholder="Pergunta"
+                            [(ngModel)]="quiz.perguntas[2].pergunta" required />
+
+                        <input type="text" class="form-control" id="inputTitle9" name="i" placeholder="Alternativa a"
+                            [(ngModel)]="quiz.perguntas[2].a" required />
+
+                        <input type="text" class="form-control" id="inputTitle10" name="j" placeholder="Alternativa b"
+                            [(ngModel)]="quiz.perguntas[2].b" required />
+
+                        <input type="text" class="form-control" id="inputTitle11" name="k" placeholder="Alternativa c"
+                            [(ngModel)]="quiz.perguntas[2].c" required />
+
+                        <input type="text" class="form-control" id="inputTitle12" name="l" placeholder="Alternativa d"
+                            [(ngModel)]="quiz.perguntas[2].d" required />
+
+                        <input type="text" class="form-control" id="inputTitle13" name="m" placeholder="Alternativa e"
+                            [(ngModel)]="quiz.perguntas[2].e" required />
+
+                            <label for="inputResposta2" class="mt-2">Resposta:</label>
+                            <select type="text" class="form-control" id="inputResposta2" name="numero de alternativas"
+                            placeholder="Resposta correta" [(ngModel)]="quiz.perguntas[2].respostaCerta" required>
+                            <option [value]="quiz.perguntas[2].a">{{quiz.perguntas[2].a}}</option>
+                            <option [value]="quiz.perguntas[2].b">{{quiz.perguntas[2].b}}</option>
+                            <option [value]="quiz.perguntas[2].c">{{quiz.perguntas[2].c}}</option>
+                            <option [value]="quiz.perguntas[2].d">{{quiz.perguntas[2].d}}</option>
+                            <option [value]="quiz.perguntas[2].e">{{quiz.perguntas[2].e}}</option>
+                        </select>
+                    </div>
+
+                    <div style="margin-bottom: 30px;">
+                        <input type="text" class="form-control" id="inputTitle8" name="h" placeholder="Pergunta"
+                            [(ngModel)]="quiz.perguntas[3].pergunta" required />
+
+                        <input type="text" class="form-control" id="inputTitle9" name="i" placeholder="Alternativa a"
+                            [(ngModel)]="quiz.perguntas[3].a" required />
+
+                        <input type="text" class="form-control" id="inputTitle10" name="j" placeholder="Alternativa b"
+                            [(ngModel)]="quiz.perguntas[3].b" required />
+
+                        <input type="text" class="form-control" id="inputTitle11" name="k" placeholder="Alternativa c"
+                            [(ngModel)]="quiz.perguntas[3].c" required />
+
+                        <input type="text" class="form-control" id="inputTitle12" name="l" placeholder="Alternativa d"
+                            [(ngModel)]="quiz.perguntas[3].d" required />
+
+                        <input type="text" class="form-control" id="inputTitle13" name="m" placeholder="Alternativa e"
+                            [(ngModel)]="quiz.perguntas[3].e" required />
+
+                            <label for="inputResposta3" class="mt-2">Resposta:</label>
+                            <select type="text" class="form-control" id="inputResposta3" name="numero de alternativas"
+                                placeholder="Resposta correta" [(ngModel)]="quiz.perguntas[3].respostaCerta" required>
+                                <option [value]="quiz.perguntas[3].a">{{quiz.perguntas[3].a}}</option>
+                                <option [value]="quiz.perguntas[3].b">{{quiz.perguntas[3].b}}</option>
+                                <option [value]="quiz.perguntas[3].c">{{quiz.perguntas[3].c}}</option>
+                                <option [value]="quiz.perguntas[3].d">{{quiz.perguntas[3].d}}</option>
+                                <option [value]="quiz.perguntas[3].e">{{quiz.perguntas[3].e}}</option>
+                            </select>
+                    </div>
+
+                    <div style="margin-bottom: 30px;">
+                        <input type="text" class="form-control" id="inputTitle8" name="h" placeholder="Pergunta"
+                            [(ngModel)]="quiz.perguntas[4].pergunta" required />
+
+                        <input type="text" class="form-control" id="inputTitle9" name="i" placeholder="Alternativa a"
+                            [(ngModel)]="quiz.perguntas[4].a" required />
+
+                        <input type="text" class="form-control" id="inputTitle10" name="j" placeholder="Alternativa b"
+                            [(ngModel)]="quiz.perguntas[4].b" required />
+
+                        <input type="text" class="form-control" id="inputTitle11" name="k" placeholder="Alternativa c"
+                            [(ngModel)]="quiz.perguntas[4].c" required />
+
+                        <input type="text" class="form-control" id="inputTitle12" name="l" placeholder="Alternativa d"
+                            [(ngModel)]="quiz.perguntas[4].d" required />
+
+                        <input type="text" class="form-control" id="inputTitle13" name="m" placeholder="Alternativa e"
+                            [(ngModel)]="quiz.perguntas[4].e" required />
+
+                            <label for="inputResposta4" class="mt-2">Resposta:</label>
+                            <select type="text" class="form-control" id="inputResposta4" name="numero de alternativas"
+                                placeholder="Resposta correta" [(ngModel)]="quiz.perguntas[4].respostaCerta" required>
+                                <option [value]="quiz.perguntas[4].a">{{quiz.perguntas[4].a}}</option>
+                                <option [value]="quiz.perguntas[4].b">{{quiz.perguntas[4].b}}</option>
+                                <option [value]="quiz.perguntas[4].c">{{quiz.perguntas[4].c}}</option>
+                                <option [value]="quiz.perguntas[4].d">{{quiz.perguntas[4].d}}</option>
+                                <option [value]="quiz.perguntas[4].e">{{quiz.perguntas[4].e}}</option>
+                            </select>
+                    </div>
+
+                    <div style="margin-bottom: 30px;">
+                        <input type="text" class="form-control" id="inputTitle8" name="h" placeholder="Pergunta"
+                            [(ngModel)]="quiz.perguntas[5].pergunta" required />
+
+                        <input type="text" class="form-control" id="inputTitle9" name="i" placeholder="Alternativa a"
+                            [(ngModel)]="quiz.perguntas[5].a" required />
+
+                        <input type="text" class="form-control" id="inputTitle10" name="j" placeholder="Alternativa b"
+                            [(ngModel)]="quiz.perguntas[5].b" required />
+
+                        <input type="text" class="form-control" id="inputTitle11" name="k" placeholder="Alternativa c"
+                            [(ngModel)]="quiz.perguntas[5].c" required />
+
+                        <input type="text" class="form-control" id="inputTitle12" name="l" placeholder="Alternativa d"
+                            [(ngModel)]="quiz.perguntas[5].d" required />
+
+                        <input type="text" class="form-control" id="inputTitle13" name="m" placeholder="Alternativa e"
+                            [(ngModel)]="quiz.perguntas[5].e" required />
+
+                            <label for="inputResposta5" class="mt-2">Resposta:</label>
+                            <select type="text" class="form-control" id="inputResposta5" name="numero de alternativas"
+                                placeholder="Resposta correta" [(ngModel)]="quiz.perguntas[5].respostaCerta" required>
+                                <option [value]="quiz.perguntas[5].a">{{quiz.perguntas[5].a}}</option>
+                                <option [value]="quiz.perguntas[5].b">{{quiz.perguntas[5].b}}</option>
+                                <option [value]="quiz.perguntas[5].c">{{quiz.perguntas[5].c}}</option>
+                                <option [value]="quiz.perguntas[5].d">{{quiz.perguntas[5].d}}</option>
+                                <option [value]="quiz.perguntas[5].e">{{quiz.perguntas[5].e}}</option>
+                            </select>
+                    </div>
+                </div>
+
+
+                <div *ngIf="quiz.numeroPerguntas == 7">
+
+                    <div style="margin-bottom: 30px;">
+                        <input type="text" class="form-control" id="inputTitle1" name="a" placeholder="Pergunta"
+                            [(ngModel)]="quiz.perguntas[0].pergunta" required />
+
+                        <input type="text" class="form-control" id="inputTitle2" name="b" placeholder="Alternativa a"
+                            [(ngModel)]="quiz.perguntas[0].a" required />
+
+                        <input type="text" class="form-control" id="inputTitle3" name="c" placeholder="Alternativa b"
+                            [(ngModel)]="quiz.perguntas[0].b" required />
+
+                        <input type="text" class="form-control" id="inputTitle4" name="d" placeholder="Alternativa c"
+                            [(ngModel)]="quiz.perguntas[0].c" required />
+
+                        <input type="text" class="form-control" id="inputTitle5" name="e" placeholder="Alternativa d"
+                            [(ngModel)]="quiz.perguntas[0].d" required />
+
+                        <input type="text" class="form-control" id="inputTitle6" name="f" placeholder="Alternativa e"
+                            [(ngModel)]="quiz.perguntas[0].e" required />
+
+                            <label for="inputResposta" class="mt-2">Resposta:</label>
+                            <select type="text" class="form-control" id="inputResposta" name="numero de alternativas"
+                                placeholder="Resposta correta" [(ngModel)]="quiz.perguntas[0].respostaCerta" required>
+                                <option [value]="quiz.perguntas[0].a">{{quiz.perguntas[0].a}}</option>
+                                <option [value]="quiz.perguntas[0].b">{{quiz.perguntas[0].b}}</option>
+                                <option [value]="quiz.perguntas[0].c">{{quiz.perguntas[0].c}}</option>
+                                <option [value]="quiz.perguntas[0].d">{{quiz.perguntas[0].d}}</option>
+                                <option [value]="quiz.perguntas[0].e">{{quiz.perguntas[0].e}}</option>
+                            </select>
+                    </div>
+
+                    <div style="margin-bottom: 30px;">
+                        <input type="text" class="form-control" id="inputTitle8" name="h" placeholder="Pergunta"
+                            [(ngModel)]="quiz.perguntas[1].pergunta" required />
+
+                        <input type="text" class="form-control" id="inputTitle9" name="i" placeholder="Alternativa a"
+                            [(ngModel)]="quiz.perguntas[1].a" required />
+
+                        <input type="text" class="form-control" id="inputTitle10" name="j" placeholder="Alternativa b"
+                            [(ngModel)]="quiz.perguntas[1].b" required />
+
+                        <input type="text" class="form-control" id="inputTitle11" name="k" placeholder="Alternativa c"
+                            [(ngModel)]="quiz.perguntas[1].c" required />
+
+                        <input type="text" class="form-control" id="inputTitle12" name="l" placeholder="Alternativa d"
+                            [(ngModel)]="quiz.perguntas[1].d" required />
+
+                        <input type="text" class="form-control" id="inputTitle13" name="m" placeholder="Alternativa e"
+                            [(ngModel)]="quiz.perguntas[1].e" required />
+
+                            <label for="inputResposta1" class="mt-2">Resposta:</label>
+                            <select type="text" class="form-control" id="inputResposta1" name="numero de alternativas"
+                                placeholder="Resposta correta" [(ngModel)]="quiz.perguntas[1].respostaCerta" required>
+                                <option [value]="quiz.perguntas[1].a">{{quiz.perguntas[1].a}}</option>
+                                <option [value]="quiz.perguntas[1].b">{{quiz.perguntas[1].b}}</option>
+                                <option [value]="quiz.perguntas[1].c">{{quiz.perguntas[1].c}}</option>
+                                <option [value]="quiz.perguntas[1].d">{{quiz.perguntas[1].d}}</option>
+                                <option [value]="quiz.perguntas[1].e">{{quiz.perguntas[1].e}}</option>
+                            </select>
+                    </div>
+
+                    <div style="margin-bottom: 30px;">
+                        <input type="text" class="form-control" id="inputTitle8" name="h" placeholder="Pergunta"
+                            [(ngModel)]="quiz.perguntas[2].pergunta" required />
+
+                        <input type="text" class="form-control" id="inputTitle9" name="i" placeholder="Alternativa a"
+                            [(ngModel)]="quiz.perguntas[2].a" required />
+
+                        <input type="text" class="form-control" id="inputTitle10" name="j" placeholder="Alternativa b"
+                            [(ngModel)]="quiz.perguntas[2].b" required />
+
+                        <input type="text" class="form-control" id="inputTitle11" name="k" placeholder="Alternativa c"
+                            [(ngModel)]="quiz.perguntas[2].c" required />
+
+                        <input type="text" class="form-control" id="inputTitle12" name="l" placeholder="Alternativa d"
+                            [(ngModel)]="quiz.perguntas[2].d" required />
+
+                        <input type="text" class="form-control" id="inputTitle13" name="m" placeholder="Alternativa e"
+                            [(ngModel)]="quiz.perguntas[2].e" required />
+
+                            <label for="inputResposta2" class="mt-2">Resposta:</label>
+                            <select type="text" class="form-control" id="inputResposta2" name="numero de alternativas"
+                            placeholder="Resposta correta" [(ngModel)]="quiz.perguntas[2].respostaCerta" required>
+                            <option [value]="quiz.perguntas[2].a">{{quiz.perguntas[2].a}}</option>
+                            <option [value]="quiz.perguntas[2].b">{{quiz.perguntas[2].b}}</option>
+                            <option [value]="quiz.perguntas[2].c">{{quiz.perguntas[2].c}}</option>
+                            <option [value]="quiz.perguntas[2].d">{{quiz.perguntas[2].d}}</option>
+                            <option [value]="quiz.perguntas[2].e">{{quiz.perguntas[2].e}}</option>
+                        </select>
+                    </div>
+
+                    <div style="margin-bottom: 30px;">
+                        <input type="text" class="form-control" id="inputTitle8" name="h" placeholder="Pergunta"
+                            [(ngModel)]="quiz.perguntas[3].pergunta" required />
+
+                        <input type="text" class="form-control" id="inputTitle9" name="i" placeholder="Alternativa a"
+                            [(ngModel)]="quiz.perguntas[3].a" required />
+
+                        <input type="text" class="form-control" id="inputTitle10" name="j" placeholder="Alternativa b"
+                            [(ngModel)]="quiz.perguntas[3].b" required />
+
+                        <input type="text" class="form-control" id="inputTitle11" name="k" placeholder="Alternativa c"
+                            [(ngModel)]="quiz.perguntas[3].c" required />
+
+                        <input type="text" class="form-control" id="inputTitle12" name="l" placeholder="Alternativa d"
+                            [(ngModel)]="quiz.perguntas[3].d" required />
+
+                        <input type="text" class="form-control" id="inputTitle13" name="m" placeholder="Alternativa e"
+                            [(ngModel)]="quiz.perguntas[3].e" required />
+
+                            <label for="inputResposta3" class="mt-2">Resposta:</label>
+                            <select type="text" class="form-control" id="inputResposta3" name="numero de alternativas"
+                                placeholder="Resposta correta" [(ngModel)]="quiz.perguntas[3].respostaCerta" required>
+                                <option [value]="quiz.perguntas[3].a">{{quiz.perguntas[3].a}}</option>
+                                <option [value]="quiz.perguntas[3].b">{{quiz.perguntas[3].b}}</option>
+                                <option [value]="quiz.perguntas[3].c">{{quiz.perguntas[3].c}}</option>
+                                <option [value]="quiz.perguntas[3].d">{{quiz.perguntas[3].d}}</option>
+                                <option [value]="quiz.perguntas[3].e">{{quiz.perguntas[3].e}}</option>
+                            </select>
+                    </div>
+
+                    <div style="margin-bottom: 30px;">
+                        <input type="text" class="form-control" id="inputTitle8" name="h" placeholder="Pergunta"
+                            [(ngModel)]="quiz.perguntas[4].pergunta" required />
+
+                        <input type="text" class="form-control" id="inputTitle9" name="i" placeholder="Alternativa a"
+                            [(ngModel)]="quiz.perguntas[4].a" required />
+
+                        <input type="text" class="form-control" id="inputTitle10" name="j" placeholder="Alternativa b"
+                            [(ngModel)]="quiz.perguntas[4].b" required />
+
+                        <input type="text" class="form-control" id="inputTitle11" name="k" placeholder="Alternativa c"
+                            [(ngModel)]="quiz.perguntas[4].c" required />
+
+                        <input type="text" class="form-control" id="inputTitle12" name="l" placeholder="Alternativa d"
+                            [(ngModel)]="quiz.perguntas[4].d" required />
+
+                        <input type="text" class="form-control" id="inputTitle13" name="m" placeholder="Alternativa e"
+                            [(ngModel)]="quiz.perguntas[4].e" required />
+
+                            <label for="inputResposta4" class="mt-2">Resposta:</label>
+                            <select type="text" class="form-control" id="inputResposta4" name="numero de alternativas"
+                                placeholder="Resposta correta" [(ngModel)]="quiz.perguntas[4].respostaCerta" required>
+                                <option [value]="quiz.perguntas[4].a">{{quiz.perguntas[4].a}}</option>
+                                <option [value]="quiz.perguntas[4].b">{{quiz.perguntas[4].b}}</option>
+                                <option [value]="quiz.perguntas[4].c">{{quiz.perguntas[4].c}}</option>
+                                <option [value]="quiz.perguntas[4].d">{{quiz.perguntas[4].d}}</option>
+                                <option [value]="quiz.perguntas[4].e">{{quiz.perguntas[4].e}}</option>
+                            </select>
+                    </div>
+
+                    <div style="margin-bottom: 30px;">
+                        <input type="text" class="form-control" id="inputTitle8" name="h" placeholder="Pergunta"
+                            [(ngModel)]="quiz.perguntas[5].pergunta" required />
+
+                        <input type="text" class="form-control" id="inputTitle9" name="i" placeholder="Alternativa a"
+                            [(ngModel)]="quiz.perguntas[5].a" required />
+
+                        <input type="text" class="form-control" id="inputTitle10" name="j" placeholder="Alternativa b"
+                            [(ngModel)]="quiz.perguntas[5].b" required />
+
+                        <input type="text" class="form-control" id="inputTitle11" name="k" placeholder="Alternativa c"
+                            [(ngModel)]="quiz.perguntas[5].c" required />
+
+                        <input type="text" class="form-control" id="inputTitle12" name="l" placeholder="Alternativa d"
+                            [(ngModel)]="quiz.perguntas[5].d" required />
+
+                        <input type="text" class="form-control" id="inputTitle13" name="m" placeholder="Alternativa e"
+                            [(ngModel)]="quiz.perguntas[5].e" required />
+
+                            <label for="inputResposta5" class="mt-2">Resposta:</label>
+                            <select type="text" class="form-control" id="inputResposta5" name="numero de alternativas"
+                                placeholder="Resposta correta" [(ngModel)]="quiz.perguntas[5].respostaCerta" required>
+                                <option [value]="quiz.perguntas[5].a">{{quiz.perguntas[5].a}}</option>
+                                <option [value]="quiz.perguntas[5].b">{{quiz.perguntas[5].b}}</option>
+                                <option [value]="quiz.perguntas[5].c">{{quiz.perguntas[5].c}}</option>
+                                <option [value]="quiz.perguntas[5].d">{{quiz.perguntas[5].d}}</option>
+                                <option [value]="quiz.perguntas[5].e">{{quiz.perguntas[5].e}}</option>
+                            </select>
+                    </div>
+
+                    <div style="margin-bottom: 30px;">
+                        <input type="text" class="form-control" id="inputTitle8" name="h" placeholder="Pergunta"
+                            [(ngModel)]="quiz.perguntas[6].pergunta" required />
+
+                        <input type="text" class="form-control" id="inputTitle9" name="i" placeholder="Alternativa a"
+                            [(ngModel)]="quiz.perguntas[6].a" required />
+
+                        <input type="text" class="form-control" id="inputTitle10" name="j" placeholder="Alternativa b"
+                            [(ngModel)]="quiz.perguntas[6].b" required />
+
+                        <input type="text" class="form-control" id="inputTitle11" name="k" placeholder="Alternativa c"
+                            [(ngModel)]="quiz.perguntas[6].c" required />
+
+                        <input type="text" class="form-control" id="inputTitle12" name="l" placeholder="Alternativa d"
+                            [(ngModel)]="quiz.perguntas[6].d" required />
+
+                        <input type="text" class="form-control" id="inputTitle13" name="m" placeholder="Alternativa e"
+                            [(ngModel)]="quiz.perguntas[6].e" required />
+
+                            <label for="inputResposta6" class="mt-2">Resposta:</label>
+                            <select type="text" class="form-control" id="inputResposta6" name="numero de alternativas"
+                                placeholder="Resposta correta" [(ngModel)]="quiz.perguntas[6].respostaCerta" required>
+                                <option [value]="quiz.perguntas[6].a">{{quiz.perguntas[6].a}}</option>
+                                <option [value]="quiz.perguntas[6].b">{{quiz.perguntas[6].b}}</option>
+                                <option [value]="quiz.perguntas[6].c">{{quiz.perguntas[6].c}}</option>
+                                <option [value]="quiz.perguntas[6].d">{{quiz.perguntas[6].d}}</option>
+                                <option [value]="quiz.perguntas[6].e">{{quiz.perguntas[6].e}}</option>
+                            </select>
+                    </div>
+                </div>
+
+                <div *ngIf="quiz.numeroPerguntas == 8">
+
+                    <div style="margin-bottom: 30px;">
+                        <input type="text" class="form-control" id="inputTitle1" name="a" placeholder="Pergunta"
+                            [(ngModel)]="quiz.perguntas[0].pergunta" required />
+
+                        <input type="text" class="form-control" id="inputTitle2" name="b" placeholder="Alternativa a"
+                            [(ngModel)]="quiz.perguntas[0].a" required />
+
+                        <input type="text" class="form-control" id="inputTitle3" name="c" placeholder="Alternativa b"
+                            [(ngModel)]="quiz.perguntas[0].b" required />
+
+                        <input type="text" class="form-control" id="inputTitle4" name="d" placeholder="Alternativa c"
+                            [(ngModel)]="quiz.perguntas[0].c" required />
+
+                        <input type="text" class="form-control" id="inputTitle5" name="e" placeholder="Alternativa d"
+                            [(ngModel)]="quiz.perguntas[0].d" required />
+
+                        <input type="text" class="form-control" id="inputTitle6" name="f" placeholder="Alternativa e"
+                            [(ngModel)]="quiz.perguntas[0].e" required />
+
+                        <label for="inputResposta" class="mt-2">Resposta:</label>
+                            <select type="text" class="form-control" id="inputResposta" name="numero de alternativas"
+                                placeholder="Resposta correta" [(ngModel)]="quiz.perguntas[0].respostaCerta" required>
+                                <option [value]="quiz.perguntas[0].a">{{quiz.perguntas[0].a}}</option>
+                                <option [value]="quiz.perguntas[0].b">{{quiz.perguntas[0].b}}</option>
+                                <option [value]="quiz.perguntas[0].c">{{quiz.perguntas[0].c}}</option>
+                                <option [value]="quiz.perguntas[0].d">{{quiz.perguntas[0].d}}</option>
+                                <option [value]="quiz.perguntas[0].e">{{quiz.perguntas[0].e}}</option>
+                            </select>
+                    </div>
+
+                    <div style="margin-bottom: 30px;">
+                        <input type="text" class="form-control" id="inputTitle8" name="h" placeholder="Pergunta"
+                            [(ngModel)]="quiz.perguntas[1].pergunta" required />
+
+                        <input type="text" class="form-control" id="inputTitle9" name="i" placeholder="Alternativa a"
+                            [(ngModel)]="quiz.perguntas[1].a" required />
+
+                        <input type="text" class="form-control" id="inputTitle10" name="j" placeholder="Alternativa b"
+                            [(ngModel)]="quiz.perguntas[1].b" required />
+
+                        <input type="text" class="form-control" id="inputTitle11" name="k" placeholder="Alternativa c"
+                            [(ngModel)]="quiz.perguntas[1].c" required />
+
+                        <input type="text" class="form-control" id="inputTitle12" name="l" placeholder="Alternativa d"
+                            [(ngModel)]="quiz.perguntas[1].d" required />
+
+                        <input type="text" class="form-control" id="inputTitle13" name="m" placeholder="Alternativa e"
+                            [(ngModel)]="quiz.perguntas[1].e" required />
+
+                        <label for="inputResposta1" class="mt-2">Resposta:</label>
+                            <select type="text" class="form-control" id="inputResposta1" name="numero de alternativas"
+                                placeholder="Resposta correta" [(ngModel)]="quiz.perguntas[1].respostaCerta" required>
+                                <option [value]="quiz.perguntas[1].a">{{quiz.perguntas[1].a}}</option>
+                                <option [value]="quiz.perguntas[1].b">{{quiz.perguntas[1].b}}</option>
+                                <option [value]="quiz.perguntas[1].c">{{quiz.perguntas[1].c}}</option>
+                                <option [value]="quiz.perguntas[1].d">{{quiz.perguntas[1].d}}</option>
+                                <option [value]="quiz.perguntas[1].e">{{quiz.perguntas[1].e}}</option>
+                            </select>
+                    </div>
+
+                    <div style="margin-bottom: 30px;">
+                        <input type="text" class="form-control" id="inputTitle8" name="h" placeholder="Pergunta"
+                            [(ngModel)]="quiz.perguntas[2].pergunta" required />
+
+                        <input type="text" class="form-control" id="inputTitle9" name="i" placeholder="Alternativa a"
+                            [(ngModel)]="quiz.perguntas[2].a" required />
+
+                        <input type="text" class="form-control" id="inputTitle10" name="j" placeholder="Alternativa b"
+                            [(ngModel)]="quiz.perguntas[2].b" required />
+
+                        <input type="text" class="form-control" id="inputTitle11" name="k" placeholder="Alternativa c"
+                            [(ngModel)]="quiz.perguntas[2].c" required />
+
+                        <input type="text" class="form-control" id="inputTitle12" name="l" placeholder="Alternativa d"
+                            [(ngModel)]="quiz.perguntas[2].d" required />
+
+                        <input type="text" class="form-control" id="inputTitle13" name="m" placeholder="Alternativa e"
+                            [(ngModel)]="quiz.perguntas[2].e" required />
+
+                        <label for="inputResposta2" class="mt-2">Resposta:</label>
+                            <select type="text" class="form-control" id="inputResposta2" name="numero de alternativas"
+                            placeholder="Resposta correta" [(ngModel)]="quiz.perguntas[2].respostaCerta" required>
+                            <option [value]="quiz.perguntas[2].a">{{quiz.perguntas[2].a}}</option>
+                            <option [value]="quiz.perguntas[2].b">{{quiz.perguntas[2].b}}</option>
+                            <option [value]="quiz.perguntas[2].c">{{quiz.perguntas[2].c}}</option>
+                            <option [value]="quiz.perguntas[2].d">{{quiz.perguntas[2].d}}</option>
+                            <option [value]="quiz.perguntas[2].e">{{quiz.perguntas[2].e}}</option>
+                        </select>
+                    </div>
+
+                    <div style="margin-bottom: 30px;">
+                        <input type="text" class="form-control" id="inputTitle8" name="h" placeholder="Pergunta"
+                            [(ngModel)]="quiz.perguntas[3].pergunta" required />
+
+                        <input type="text" class="form-control" id="inputTitle9" name="i" placeholder="Alternativa a"
+                            [(ngModel)]="quiz.perguntas[3].a" required />
+
+                        <input type="text" class="form-control" id="inputTitle10" name="j" placeholder="Alternativa b"
+                            [(ngModel)]="quiz.perguntas[3].b" required />
+
+                        <input type="text" class="form-control" id="inputTitle11" name="k" placeholder="Alternativa c"
+                            [(ngModel)]="quiz.perguntas[3].c" required />
+
+                        <input type="text" class="form-control" id="inputTitle12" name="l" placeholder="Alternativa d"
+                            [(ngModel)]="quiz.perguntas[3].d" required />
+
+                        <input type="text" class="form-control" id="inputTitle13" name="m" placeholder="Alternativa e"
+                            [(ngModel)]="quiz.perguntas[3].e" required />
+
+                        <label for="inputResposta3" class="mt-2">Resposta:</label>
+                            <select type="text" class="form-control" id="inputResposta3" name="numero de alternativas"
+                                placeholder="Resposta correta" [(ngModel)]="quiz.perguntas[3].respostaCerta" required>
+                                <option [value]="quiz.perguntas[3].a">{{quiz.perguntas[3].a}}</option>
+                                <option [value]="quiz.perguntas[3].b">{{quiz.perguntas[3].b}}</option>
+                                <option [value]="quiz.perguntas[3].c">{{quiz.perguntas[3].c}}</option>
+                                <option [value]="quiz.perguntas[3].d">{{quiz.perguntas[3].d}}</option>
+                                <option [value]="quiz.perguntas[3].e">{{quiz.perguntas[3].e}}</option>
+                            </select>
+                    </div>
+
+                    <div style="margin-bottom: 30px;">
+                        <input type="text" class="form-control" id="inputTitle8" name="h" placeholder="Pergunta"
+                            [(ngModel)]="quiz.perguntas[4].pergunta" required />
+
+                        <input type="text" class="form-control" id="inputTitle9" name="i" placeholder="Alternativa a"
+                            [(ngModel)]="quiz.perguntas[4].a" required />
+
+                        <input type="text" class="form-control" id="inputTitle10" name="j" placeholder="Alternativa b"
+                            [(ngModel)]="quiz.perguntas[4].b" required />
+
+                        <input type="text" class="form-control" id="inputTitle11" name="k" placeholder="Alternativa c"
+                            [(ngModel)]="quiz.perguntas[4].c" required />
+
+                        <input type="text" class="form-control" id="inputTitle12" name="l" placeholder="Alternativa d"
+                            [(ngModel)]="quiz.perguntas[4].d" required />
+
+                        <input type="text" class="form-control" id="inputTitle13" name="m" placeholder="Alternativa e"
+                            [(ngModel)]="quiz.perguntas[4].e" required />
+
+                        <label for="inputResposta4" class="mt-2">Resposta:</label>
+                            <select type="text" class="form-control" id="inputResposta4" name="numero de alternativas"
+                                placeholder="Resposta correta" [(ngModel)]="quiz.perguntas[4].respostaCerta" required>
+                                <option [value]="quiz.perguntas[4].a">{{quiz.perguntas[4].a}}</option>
+                                <option [value]="quiz.perguntas[4].b">{{quiz.perguntas[4].b}}</option>
+                                <option [value]="quiz.perguntas[4].c">{{quiz.perguntas[4].c}}</option>
+                                <option [value]="quiz.perguntas[4].d">{{quiz.perguntas[4].d}}</option>
+                                <option [value]="quiz.perguntas[4].e">{{quiz.perguntas[4].e}}</option>
+                            </select>
+                    </div>
+
+                    <div style="margin-bottom: 30px;">
+                        <input type="text" class="form-control" id="inputTitle8" name="h" placeholder="Pergunta"
+                            [(ngModel)]="quiz.perguntas[5].pergunta" required />
+
+                        <input type="text" class="form-control" id="inputTitle9" name="i" placeholder="Alternativa a"
+                            [(ngModel)]="quiz.perguntas[5].a" required />
+
+                        <input type="text" class="form-control" id="inputTitle10" name="j" placeholder="Alternativa b"
+                            [(ngModel)]="quiz.perguntas[5].b" required />
+
+                        <input type="text" class="form-control" id="inputTitle11" name="k" placeholder="Alternativa c"
+                            [(ngModel)]="quiz.perguntas[5].c" required />
+
+                        <input type="text" class="form-control" id="inputTitle12" name="l" placeholder="Alternativa d"
+                            [(ngModel)]="quiz.perguntas[5].d" required />
+
+                        <input type="text" class="form-control" id="inputTitle13" name="m" placeholder="Alternativa e"
+                            [(ngModel)]="quiz.perguntas[5].e" required />
+
+                        <label for="inputResposta5" class="mt-2">Resposta:</label>
+                            <select type="text" class="form-control" id="inputResposta5" name="numero de alternativas"
+                                placeholder="Resposta correta" [(ngModel)]="quiz.perguntas[5].respostaCerta" required>
+                                <option [value]="quiz.perguntas[5].a">{{quiz.perguntas[5].a}}</option>
+                                <option [value]="quiz.perguntas[5].b">{{quiz.perguntas[5].b}}</option>
+                                <option [value]="quiz.perguntas[5].c">{{quiz.perguntas[5].c}}</option>
+                                <option [value]="quiz.perguntas[5].d">{{quiz.perguntas[5].d}}</option>
+                                <option [value]="quiz.perguntas[5].e">{{quiz.perguntas[5].e}}</option>
+                            </select>
+                    </div>
+
+                    <div style="margin-bottom: 30px;">
+                        <input type="text" class="form-control" id="inputTitle8" name="h" placeholder="Pergunta"
+                            [(ngModel)]="quiz.perguntas[6].pergunta" required />
+
+                        <input type="text" class="form-control" id="inputTitle9" name="i" placeholder="Alternativa a"
+                            [(ngModel)]="quiz.perguntas[6].a" required />
+
+                        <input type="text" class="form-control" id="inputTitle10" name="j" placeholder="Alternativa b"
+                            [(ngModel)]="quiz.perguntas[6].b" required />
+
+                        <input type="text" class="form-control" id="inputTitle11" name="k" placeholder="Alternativa c"
+                            [(ngModel)]="quiz.perguntas[6].c" required />
+
+                        <input type="text" class="form-control" id="inputTitle12" name="l" placeholder="Alternativa d"
+                            [(ngModel)]="quiz.perguntas[6].d" required />
+
+                        <input type="text" class="form-control" id="inputTitle13" name="m" placeholder="Alternativa e"
+                            [(ngModel)]="quiz.perguntas[6].e" required />
+
+                        <label for="inputResposta6" class="mt-2">Resposta:</label>
+                            <select type="text" class="form-control" id="inputResposta6" name="numero de alternativas"
+                                placeholder="Resposta correta" [(ngModel)]="quiz.perguntas[6].respostaCerta" required>
+                                <option [value]="quiz.perguntas[6].a">{{quiz.perguntas[6].a}}</option>
+                                <option [value]="quiz.perguntas[6].b">{{quiz.perguntas[6].b}}</option>
+                                <option [value]="quiz.perguntas[6].c">{{quiz.perguntas[6].c}}</option>
+                                <option [value]="quiz.perguntas[6].d">{{quiz.perguntas[6].d}}</option>
+                                <option [value]="quiz.perguntas[6].e">{{quiz.perguntas[6].e}}</option>
+                            </select>
+                    </div>
+
+                    <div style="margin-bottom: 30px;">
+                        <input type="text" class="form-control" id="inputTitle8" name="h" placeholder="Pergunta"
+                            [(ngModel)]="quiz.perguntas[7].pergunta" required />
+
+                        <input type="text" class="form-control" id="inputTitle9" name="i" placeholder="Alternativa a"
+                            [(ngModel)]="quiz.perguntas[7].a" required />
+
+                        <input type="text" class="form-control" id="inputTitle10" name="j" placeholder="Alternativa b"
+                            [(ngModel)]="quiz.perguntas[7].b" required />
+
+                        <input type="text" class="form-control" id="inputTitle11" name="k" placeholder="Alternativa c"
+                            [(ngModel)]="quiz.perguntas[7].c" required />
+
+                        <input type="text" class="form-control" id="inputTitle12" name="l" placeholder="Alternativa d"
+                            [(ngModel)]="quiz.perguntas[7].d" required />
+
+                        <input type="text" class="form-control" id="inputTitle13" name="m" placeholder="Alternativa e"
+                            [(ngModel)]="quiz.perguntas[7].e" required />
+
+                            <label for="inputResposta7" class="mt-2">Resposta:</label>
+                            <select type="text" class="form-control" id="inputResposta7" name="numero de alternativas"
+                                placeholder="Resposta correta" [(ngModel)]="quiz.perguntas[7].respostaCerta" required>
+                                <option [value]="quiz.perguntas[7].a">{{quiz.perguntas[7].a}}</option>
+                                <option [value]="quiz.perguntas[7].b">{{quiz.perguntas[7].b}}</option>
+                                <option [value]="quiz.perguntas[7].c">{{quiz.perguntas[7].c}}</option>
+                                <option [value]="quiz.perguntas[7].d">{{quiz.perguntas[7].d}}</option>
+                                <option [value]="quiz.perguntas[7].e">{{quiz.perguntas[7].e}}</option>
+                            </select>
+                    </div>
+                </div>
+
+                <div *ngIf="quiz.numeroPerguntas == 9">
+
+                    <div style="margin-bottom: 30px;">
+                        <input type="text" class="form-control" id="inputTitle1" name="a" placeholder="Pergunta"
+                            [(ngModel)]="quiz.perguntas[0].pergunta" required />
+
+                        <input type="text" class="form-control" id="inputTitle2" name="b" placeholder="Alternativa a"
+                            [(ngModel)]="quiz.perguntas[0].a" required />
+
+                        <input type="text" class="form-control" id="inputTitle3" name="c" placeholder="Alternativa b"
+                            [(ngModel)]="quiz.perguntas[0].b" required />
+
+                        <input type="text" class="form-control" id="inputTitle4" name="d" placeholder="Alternativa c"
+                            [(ngModel)]="quiz.perguntas[0].c" required />
+
+                        <input type="text" class="form-control" id="inputTitle5" name="e" placeholder="Alternativa d"
+                            [(ngModel)]="quiz.perguntas[0].d" required />
+
+                        <input type="text" class="form-control" id="inputTitle6" name="f" placeholder="Alternativa e"
+                            [(ngModel)]="quiz.perguntas[0].e" required />
+
+                        <label for="inputResposta" class="mt-2">Resposta:</label>
+                            <select type="text" class="form-control" id="inputResposta" name="numero de alternativas"
+                                placeholder="Resposta correta" [(ngModel)]="quiz.perguntas[0].respostaCerta" required>
+                                <option [value]="quiz.perguntas[0].a">{{quiz.perguntas[0].a}}</option>
+                                <option [value]="quiz.perguntas[0].b">{{quiz.perguntas[0].b}}</option>
+                                <option [value]="quiz.perguntas[0].c">{{quiz.perguntas[0].c}}</option>
+                                <option [value]="quiz.perguntas[0].d">{{quiz.perguntas[0].d}}</option>
+                                <option [value]="quiz.perguntas[0].e">{{quiz.perguntas[0].e}}</option>
+                            </select>
+                    </div>
+
+                    <div style="margin-bottom: 30px;">
+                        <input type="text" class="form-control" id="inputTitle8" name="h" placeholder="Pergunta"
+                            [(ngModel)]="quiz.perguntas[1].pergunta" required />
+
+                        <input type="text" class="form-control" id="inputTitle9" name="i" placeholder="Alternativa a"
+                            [(ngModel)]="quiz.perguntas[1].a" required />
+
+                        <input type="text" class="form-control" id="inputTitle10" name="j" placeholder="Alternativa b"
+                            [(ngModel)]="quiz.perguntas[1].b" required />
+
+                        <input type="text" class="form-control" id="inputTitle11" name="k" placeholder="Alternativa c"
+                            [(ngModel)]="quiz.perguntas[1].c" required />
+
+                        <input type="text" class="form-control" id="inputTitle12" name="l" placeholder="Alternativa d"
+                            [(ngModel)]="quiz.perguntas[1].d" required />
+
+                        <input type="text" class="form-control" id="inputTitle13" name="m" placeholder="Alternativa e"
+                            [(ngModel)]="quiz.perguntas[1].e" required />
+
+                        <label for="inputResposta1" class="mt-2">Resposta:</label>
+                            <select type="text" class="form-control" id="inputResposta1" name="numero de alternativas"
+                                placeholder="Resposta correta" [(ngModel)]="quiz.perguntas[1].respostaCerta" required>
+                                <option [value]="quiz.perguntas[1].a">{{quiz.perguntas[1].a}}</option>
+                                <option [value]="quiz.perguntas[1].b">{{quiz.perguntas[1].b}}</option>
+                                <option [value]="quiz.perguntas[1].c">{{quiz.perguntas[1].c}}</option>
+                                <option [value]="quiz.perguntas[1].d">{{quiz.perguntas[1].d}}</option>
+                                <option [value]="quiz.perguntas[1].e">{{quiz.perguntas[1].e}}</option>
+                            </select>
+                    </div>
+
+                    <div style="margin-bottom: 30px;">
+                        <input type="text" class="form-control" id="inputTitle8" name="h" placeholder="Pergunta"
+                            [(ngModel)]="quiz.perguntas[2].pergunta" required />
+
+                        <input type="text" class="form-control" id="inputTitle9" name="i" placeholder="Alternativa a"
+                            [(ngModel)]="quiz.perguntas[2].a" required />
+
+                        <input type="text" class="form-control" id="inputTitle10" name="j" placeholder="Alternativa b"
+                            [(ngModel)]="quiz.perguntas[2].b" required />
+
+                        <input type="text" class="form-control" id="inputTitle11" name="k" placeholder="Alternativa c"
+                            [(ngModel)]="quiz.perguntas[2].c" required />
+
+                        <input type="text" class="form-control" id="inputTitle12" name="l" placeholder="Alternativa d"
+                            [(ngModel)]="quiz.perguntas[2].d" required />
+
+                        <input type="text" class="form-control" id="inputTitle13" name="m" placeholder="Alternativa e"
+                            [(ngModel)]="quiz.perguntas[2].e" required />
+
+                        <label for="inputResposta2" class="mt-2">Resposta:</label>
+                            <select type="text" class="form-control" id="inputResposta2" name="numero de alternativas"
+                            placeholder="Resposta correta" [(ngModel)]="quiz.perguntas[2].respostaCerta" required>
+                            <option [value]="quiz.perguntas[2].a">{{quiz.perguntas[2].a}}</option>
+                            <option [value]="quiz.perguntas[2].b">{{quiz.perguntas[2].b}}</option>
+                            <option [value]="quiz.perguntas[2].c">{{quiz.perguntas[2].c}}</option>
+                            <option [value]="quiz.perguntas[2].d">{{quiz.perguntas[2].d}}</option>
+                            <option [value]="quiz.perguntas[2].e">{{quiz.perguntas[2].e}}</option>
+                        </select>
+                    </div>
+
+                    <div style="margin-bottom: 30px;">
+                        <input type="text" class="form-control" id="inputTitle8" name="h" placeholder="Pergunta"
+                            [(ngModel)]="quiz.perguntas[3].pergunta" required />
+
+                        <input type="text" class="form-control" id="inputTitle9" name="i" placeholder="Alternativa a"
+                            [(ngModel)]="quiz.perguntas[3].a" required />
+
+                        <input type="text" class="form-control" id="inputTitle10" name="j" placeholder="Alternativa b"
+                            [(ngModel)]="quiz.perguntas[3].b" required />
+
+                        <input type="text" class="form-control" id="inputTitle11" name="k" placeholder="Alternativa c"
+                            [(ngModel)]="quiz.perguntas[3].c" required />
+
+                        <input type="text" class="form-control" id="inputTitle12" name="l" placeholder="Alternativa d"
+                            [(ngModel)]="quiz.perguntas[3].d" required />
+
+                        <input type="text" class="form-control" id="inputTitle13" name="m" placeholder="Alternativa e"
+                            [(ngModel)]="quiz.perguntas[3].e" required />
+
+                        <label for="inputResposta3" class="mt-2">Resposta:</label>
+                            <select type="text" class="form-control" id="inputResposta3" name="numero de alternativas"
+                                placeholder="Resposta correta" [(ngModel)]="quiz.perguntas[3].respostaCerta" required>
+                                <option [value]="quiz.perguntas[3].a">{{quiz.perguntas[3].a}}</option>
+                                <option [value]="quiz.perguntas[3].b">{{quiz.perguntas[3].b}}</option>
+                                <option [value]="quiz.perguntas[3].c">{{quiz.perguntas[3].c}}</option>
+                                <option [value]="quiz.perguntas[3].d">{{quiz.perguntas[3].d}}</option>
+                                <option [value]="quiz.perguntas[3].e">{{quiz.perguntas[3].e}}</option>
+                            </select>
+                    </div>
+
+                    <div style="margin-bottom: 30px;">
+                        <input type="text" class="form-control" id="inputTitle8" name="h" placeholder="Pergunta"
+                            [(ngModel)]="quiz.perguntas[4].pergunta" required />
+
+                        <input type="text" class="form-control" id="inputTitle9" name="i" placeholder="Alternativa a"
+                            [(ngModel)]="quiz.perguntas[4].a" required />
+
+                        <input type="text" class="form-control" id="inputTitle10" name="j" placeholder="Alternativa b"
+                            [(ngModel)]="quiz.perguntas[4].b" required />
+
+                        <input type="text" class="form-control" id="inputTitle11" name="k" placeholder="Alternativa c"
+                            [(ngModel)]="quiz.perguntas[4].c" required />
+
+                        <input type="text" class="form-control" id="inputTitle12" name="l" placeholder="Alternativa d"
+                            [(ngModel)]="quiz.perguntas[4].d" required />
+
+                        <input type="text" class="form-control" id="inputTitle13" name="m" placeholder="Alternativa e"
+                            [(ngModel)]="quiz.perguntas[4].e" required />
+
+                        <label for="inputResposta4" class="mt-2">Resposta:</label>
+                            <select type="text" class="form-control" id="inputResposta4" name="numero de alternativas"
+                                placeholder="Resposta correta" [(ngModel)]="quiz.perguntas[4].respostaCerta" required>
+                                <option [value]="quiz.perguntas[4].a">{{quiz.perguntas[4].a}}</option>
+                                <option [value]="quiz.perguntas[4].b">{{quiz.perguntas[4].b}}</option>
+                                <option [value]="quiz.perguntas[4].c">{{quiz.perguntas[4].c}}</option>
+                                <option [value]="quiz.perguntas[4].d">{{quiz.perguntas[4].d}}</option>
+                                <option [value]="quiz.perguntas[4].e">{{quiz.perguntas[4].e}}</option>
+                            </select>
+                    </div>
+
+                    <div style="margin-bottom: 30px;">
+                        <input type="text" class="form-control" id="inputTitle8" name="h" placeholder="Pergunta"
+                            [(ngModel)]="quiz.perguntas[5].pergunta" required />
+
+                        <input type="text" class="form-control" id="inputTitle9" name="i" placeholder="Alternativa a"
+                            [(ngModel)]="quiz.perguntas[5].a" required />
+
+                        <input type="text" class="form-control" id="inputTitle10" name="j" placeholder="Alternativa b"
+                            [(ngModel)]="quiz.perguntas[5].b" required />
+
+                        <input type="text" class="form-control" id="inputTitle11" name="k" placeholder="Alternativa c"
+                            [(ngModel)]="quiz.perguntas[5].c" required />
+
+                        <input type="text" class="form-control" id="inputTitle12" name="l" placeholder="Alternativa d"
+                            [(ngModel)]="quiz.perguntas[5].d" required />
+
+                        <input type="text" class="form-control" id="inputTitle13" name="m" placeholder="Alternativa e"
+                            [(ngModel)]="quiz.perguntas[5].e" required />
+
+                        <label for="inputResposta5" class="mt-2">Resposta:</label>
+                            <select type="text" class="form-control" id="inputResposta5" name="numero de alternativas"
+                                placeholder="Resposta correta" [(ngModel)]="quiz.perguntas[5].respostaCerta" required>
+                                <option [value]="quiz.perguntas[5].a">{{quiz.perguntas[5].a}}</option>
+                                <option [value]="quiz.perguntas[5].b">{{quiz.perguntas[5].b}}</option>
+                                <option [value]="quiz.perguntas[5].c">{{quiz.perguntas[5].c}}</option>
+                                <option [value]="quiz.perguntas[5].d">{{quiz.perguntas[5].d}}</option>
+                                <option [value]="quiz.perguntas[5].e">{{quiz.perguntas[5].e}}</option>
+                            </select>
+                    </div>
+
+                    <div style="margin-bottom: 30px;">
+                        <input type="text" class="form-control" id="inputTitle8" name="h" placeholder="Pergunta"
+                            [(ngModel)]="quiz.perguntas[6].pergunta" required />
+
+                        <input type="text" class="form-control" id="inputTitle9" name="i" placeholder="Alternativa a"
+                            [(ngModel)]="quiz.perguntas[6].a" required />
+
+                        <input type="text" class="form-control" id="inputTitle10" name="j" placeholder="Alternativa b"
+                            [(ngModel)]="quiz.perguntas[6].b" required />
+
+                        <input type="text" class="form-control" id="inputTitle11" name="k" placeholder="Alternativa c"
+                            [(ngModel)]="quiz.perguntas[6].c" required />
+
+                        <input type="text" class="form-control" id="inputTitle12" name="l" placeholder="Alternativa d"
+                            [(ngModel)]="quiz.perguntas[6].d" required />
+
+                        <input type="text" class="form-control" id="inputTitle13" name="m" placeholder="Alternativa e"
+                            [(ngModel)]="quiz.perguntas[6].e" required />
+
+                        <label for="inputResposta6" class="mt-2">Resposta:</label>
+                            <select type="text" class="form-control" id="inputResposta6" name="numero de alternativas"
+                                placeholder="Resposta correta" [(ngModel)]="quiz.perguntas[6].respostaCerta" required>
+                                <option [value]="quiz.perguntas[6].a">{{quiz.perguntas[6].a}}</option>
+                                <option [value]="quiz.perguntas[6].b">{{quiz.perguntas[6].b}}</option>
+                                <option [value]="quiz.perguntas[6].c">{{quiz.perguntas[6].c}}</option>
+                                <option [value]="quiz.perguntas[6].d">{{quiz.perguntas[6].d}}</option>
+                                <option [value]="quiz.perguntas[6].e">{{quiz.perguntas[6].e}}</option>
+                            </select>
+                    </div>
+
+                    <div style="margin-bottom: 30px;">
+                        <input type="text" class="form-control" id="inputTitle8" name="h" placeholder="Pergunta"
+                            [(ngModel)]="quiz.perguntas[7].pergunta" required />
+
+                        <input type="text" class="form-control" id="inputTitle9" name="i" placeholder="Alternativa a"
+                            [(ngModel)]="quiz.perguntas[7].a" required />
+
+                        <input type="text" class="form-control" id="inputTitle10" name="j" placeholder="Alternativa b"
+                            [(ngModel)]="quiz.perguntas[7].b" required />
+
+                        <input type="text" class="form-control" id="inputTitle11" name="k" placeholder="Alternativa c"
+                            [(ngModel)]="quiz.perguntas[7].c" required />
+
+                        <input type="text" class="form-control" id="inputTitle12" name="l" placeholder="Alternativa d"
+                            [(ngModel)]="quiz.perguntas[7].d" required />
+
+                        <input type="text" class="form-control" id="inputTitle13" name="m" placeholder="Alternativa e"
+                            [(ngModel)]="quiz.perguntas[7].e" required />
+
+                            <label for="inputResposta7" class="mt-2">Resposta:</label>
+                            <select type="text" class="form-control" id="inputResposta7" name="numero de alternativas"
+                                placeholder="Resposta correta" [(ngModel)]="quiz.perguntas[7].respostaCerta" required>
+                                <option [value]="quiz.perguntas[7].a">{{quiz.perguntas[7].a}}</option>
+                                <option [value]="quiz.perguntas[7].b">{{quiz.perguntas[7].b}}</option>
+                                <option [value]="quiz.perguntas[7].c">{{quiz.perguntas[7].c}}</option>
+                                <option [value]="quiz.perguntas[7].d">{{quiz.perguntas[7].d}}</option>
+                                <option [value]="quiz.perguntas[7].e">{{quiz.perguntas[7].e}}</option>
+                            </select>
+                    </div>
+
+                    <div style="margin-bottom: 30px;">
+                        <input type="text" class="form-control" id="inputTitle8" name="h" placeholder="Pergunta"
+                            [(ngModel)]="quiz.perguntas[8].pergunta" required />
+
+                        <input type="text" class="form-control" id="inputTitle9" name="i" placeholder="Alternativa a"
+                            [(ngModel)]="quiz.perguntas[8].a" required />
+
+                        <input type="text" class="form-control" id="inputTitle10" name="j" placeholder="Alternativa b"
+                            [(ngModel)]="quiz.perguntas[8].b" required />
+
+                        <input type="text" class="form-control" id="inputTitle11" name="k" placeholder="Alternativa c"
+                            [(ngModel)]="quiz.perguntas[8].c" required />
+
+                        <input type="text" class="form-control" id="inputTitle12" name="l" placeholder="Alternativa d"
+                            [(ngModel)]="quiz.perguntas[8].d" required />
+
+                        <input type="text" class="form-control" id="inputTitle13" name="m" placeholder="Alternativa e"
+                            [(ngModel)]="quiz.perguntas[8].e" required />
+
+                            <label for="inputResposta8" class="mt-2">Resposta:</label>
+                            <select type="text" class="form-control" id="inputResposta8" name="numero de alternativas"
+                                placeholder="Resposta correta" [(ngModel)]="quiz.perguntas[8].respostaCerta" required>
+                                <option [value]="quiz.perguntas[8].a">{{quiz.perguntas[8].a}}</option>
+                                <option [value]="quiz.perguntas[8].b">{{quiz.perguntas[8].b}}</option>
+                                <option [value]="quiz.perguntas[8].c">{{quiz.perguntas[8].c}}</option>
+                                <option [value]="quiz.perguntas[8].d">{{quiz.perguntas[8].d}}</option>
+                                <option [value]="quiz.perguntas[8].e">{{quiz.perguntas[8].e}}</option>
+                            </select>
+                    </div>
+                </div>
+
+
+
+
+                <div *ngIf="quiz.numeroPerguntas == 10">
+
+                    <div style="margin-bottom: 30px;">
+                        <input type="text" class="form-control" id="inputTitle1" name="a" placeholder="Pergunta"
+                            [(ngModel)]="quiz.perguntas[0].pergunta" required />
+
+                        <input type="text" class="form-control" id="inputTitle2" name="b" placeholder="Alternativa a"
+                            [(ngModel)]="quiz.perguntas[0].a" required />
+
+                        <input type="text" class="form-control" id="inputTitle3" name="c" placeholder="Alternativa b"
+                            [(ngModel)]="quiz.perguntas[0].b" required />
+
+                        <input type="text" class="form-control" id="inputTitle4" name="d" placeholder="Alternativa c"
+                            [(ngModel)]="quiz.perguntas[0].c" required />
+
+                        <input type="text" class="form-control" id="inputTitle5" name="e" placeholder="Alternativa d"
+                            [(ngModel)]="quiz.perguntas[0].d" required />
+
+                        <input type="text" class="form-control" id="inputTitle6" name="f" placeholder="Alternativa e"
+                            [(ngModel)]="quiz.perguntas[0].e" required />
+
+                        <label for="inputResposta" class="mt-2">Resposta:</label>
+                            <select type="text" class="form-control" id="inputResposta" name="numero de alternativas"
+                                placeholder="Resposta correta" [(ngModel)]="quiz.perguntas[0].respostaCerta" required>
+                                <option [value]="quiz.perguntas[0].a">{{quiz.perguntas[0].a}}</option>
+                                <option [value]="quiz.perguntas[0].b">{{quiz.perguntas[0].b}}</option>
+                                <option [value]="quiz.perguntas[0].c">{{quiz.perguntas[0].c}}</option>
+                                <option [value]="quiz.perguntas[0].d">{{quiz.perguntas[0].d}}</option>
+                                <option [value]="quiz.perguntas[0].e">{{quiz.perguntas[0].e}}</option>
+                            </select>
+                    </div>
+
+                    <div style="margin-bottom: 30px;">
+                        <input type="text" class="form-control" id="inputTitle8" name="h" placeholder="Pergunta"
+                            [(ngModel)]="quiz.perguntas[1].pergunta" required />
+
+                        <input type="text" class="form-control" id="inputTitle9" name="i" placeholder="Alternativa a"
+                            [(ngModel)]="quiz.perguntas[1].a" required />
+
+                        <input type="text" class="form-control" id="inputTitle10" name="j" placeholder="Alternativa b"
+                            [(ngModel)]="quiz.perguntas[1].b" required />
+
+                        <input type="text" class="form-control" id="inputTitle11" name="k" placeholder="Alternativa c"
+                            [(ngModel)]="quiz.perguntas[1].c" required />
+
+                        <input type="text" class="form-control" id="inputTitle12" name="l" placeholder="Alternativa d"
+                            [(ngModel)]="quiz.perguntas[1].d" required />
+
+                        <input type="text" class="form-control" id="inputTitle13" name="m" placeholder="Alternativa e"
+                            [(ngModel)]="quiz.perguntas[1].e" required />
+
+                        <label for="inputResposta1" class="mt-2">Resposta:</label>
+                            <select type="text" class="form-control" id="inputResposta1" name="numero de alternativas"
+                                placeholder="Resposta correta" [(ngModel)]="quiz.perguntas[1].respostaCerta" required>
+                                <option [value]="quiz.perguntas[1].a">{{quiz.perguntas[1].a}}</option>
+                                <option [value]="quiz.perguntas[1].b">{{quiz.perguntas[1].b}}</option>
+                                <option [value]="quiz.perguntas[1].c">{{quiz.perguntas[1].c}}</option>
+                                <option [value]="quiz.perguntas[1].d">{{quiz.perguntas[1].d}}</option>
+                                <option [value]="quiz.perguntas[1].e">{{quiz.perguntas[1].e}}</option>
+                            </select>
+                    </div>
+
+                    <div style="margin-bottom: 30px;">
+                        <input type="text" class="form-control" id="inputTitle8" name="h" placeholder="Pergunta"
+                            [(ngModel)]="quiz.perguntas[2].pergunta" required />
+
+                        <input type="text" class="form-control" id="inputTitle9" name="i" placeholder="Alternativa a"
+                            [(ngModel)]="quiz.perguntas[2].a" required />
+
+                        <input type="text" class="form-control" id="inputTitle10" name="j" placeholder="Alternativa b"
+                            [(ngModel)]="quiz.perguntas[2].b" required />
+
+                        <input type="text" class="form-control" id="inputTitle11" name="k" placeholder="Alternativa c"
+                            [(ngModel)]="quiz.perguntas[2].c" required />
+
+                        <input type="text" class="form-control" id="inputTitle12" name="l" placeholder="Alternativa d"
+                            [(ngModel)]="quiz.perguntas[2].d" required />
+
+                        <input type="text" class="form-control" id="inputTitle13" name="m" placeholder="Alternativa e"
+                            [(ngModel)]="quiz.perguntas[2].e" required />
+
+                        <label for="inputResposta2" class="mt-2">Resposta:</label>
+                            <select type="text" class="form-control" id="inputResposta2" name="numero de alternativas"
+                            placeholder="Resposta correta" [(ngModel)]="quiz.perguntas[2].respostaCerta" required>
+                            <option [value]="quiz.perguntas[2].a">{{quiz.perguntas[2].a}}</option>
+                            <option [value]="quiz.perguntas[2].b">{{quiz.perguntas[2].b}}</option>
+                            <option [value]="quiz.perguntas[2].c">{{quiz.perguntas[2].c}}</option>
+                            <option [value]="quiz.perguntas[2].d">{{quiz.perguntas[2].d}}</option>
+                            <option [value]="quiz.perguntas[2].e">{{quiz.perguntas[2].e}}</option>
+                        </select>
+                    </div>
+
+                    <div style="margin-bottom: 30px;">
+                        <input type="text" class="form-control" id="inputTitle8" name="h" placeholder="Pergunta"
+                            [(ngModel)]="quiz.perguntas[3].pergunta" required />
+
+                        <input type="text" class="form-control" id="inputTitle9" name="i" placeholder="Alternativa a"
+                            [(ngModel)]="quiz.perguntas[3].a" required />
+
+                        <input type="text" class="form-control" id="inputTitle10" name="j" placeholder="Alternativa b"
+                            [(ngModel)]="quiz.perguntas[3].b" required />
+
+                        <input type="text" class="form-control" id="inputTitle11" name="k" placeholder="Alternativa c"
+                            [(ngModel)]="quiz.perguntas[3].c" required />
+
+                        <input type="text" class="form-control" id="inputTitle12" name="l" placeholder="Alternativa d"
+                            [(ngModel)]="quiz.perguntas[3].d" required />
+
+                        <input type="text" class="form-control" id="inputTitle13" name="m" placeholder="Alternativa e"
+                            [(ngModel)]="quiz.perguntas[3].e" required />
+
+                        <label for="inputResposta3" class="mt-2">Resposta:</label>
+                            <select type="text" class="form-control" id="inputResposta3" name="numero de alternativas"
+                                placeholder="Resposta correta" [(ngModel)]="quiz.perguntas[3].respostaCerta" required>
+                                <option [value]="quiz.perguntas[3].a">{{quiz.perguntas[3].a}}</option>
+                                <option [value]="quiz.perguntas[3].b">{{quiz.perguntas[3].b}}</option>
+                                <option [value]="quiz.perguntas[3].c">{{quiz.perguntas[3].c}}</option>
+                                <option [value]="quiz.perguntas[3].d">{{quiz.perguntas[3].d}}</option>
+                                <option [value]="quiz.perguntas[3].e">{{quiz.perguntas[3].e}}</option>
+                            </select>
+                    </div>
+
+                    <div style="margin-bottom: 30px;">
+                        <input type="text" class="form-control" id="inputTitle8" name="h" placeholder="Pergunta"
+                            [(ngModel)]="quiz.perguntas[4].pergunta" required />
+
+                        <input type="text" class="form-control" id="inputTitle9" name="i" placeholder="Alternativa a"
+                            [(ngModel)]="quiz.perguntas[4].a" required />
+
+                        <input type="text" class="form-control" id="inputTitle10" name="j" placeholder="Alternativa b"
+                            [(ngModel)]="quiz.perguntas[4].b" required />
+
+                        <input type="text" class="form-control" id="inputTitle11" name="k" placeholder="Alternativa c"
+                            [(ngModel)]="quiz.perguntas[4].c" required />
+
+                        <input type="text" class="form-control" id="inputTitle12" name="l" placeholder="Alternativa d"
+                            [(ngModel)]="quiz.perguntas[4].d" required />
+
+                        <input type="text" class="form-control" id="inputTitle13" name="m" placeholder="Alternativa e"
+                            [(ngModel)]="quiz.perguntas[4].e" required />
+
+                        <label for="inputResposta4" class="mt-2">Resposta:</label>
+                            <select type="text" class="form-control" id="inputResposta4" name="numero de alternativas"
+                                placeholder="Resposta correta" [(ngModel)]="quiz.perguntas[4].respostaCerta" required>
+                                <option [value]="quiz.perguntas[4].a">{{quiz.perguntas[4].a}}</option>
+                                <option [value]="quiz.perguntas[4].b">{{quiz.perguntas[4].b}}</option>
+                                <option [value]="quiz.perguntas[4].c">{{quiz.perguntas[4].c}}</option>
+                                <option [value]="quiz.perguntas[4].d">{{quiz.perguntas[4].d}}</option>
+                                <option [value]="quiz.perguntas[4].e">{{quiz.perguntas[4].e}}</option>
+                            </select>
+                    </div>
+
+                    <div style="margin-bottom: 30px;">
+                        <input type="text" class="form-control" id="inputTitle8" name="h" placeholder="Pergunta"
+                            [(ngModel)]="quiz.perguntas[5].pergunta" required />
+
+                        <input type="text" class="form-control" id="inputTitle9" name="i" placeholder="Alternativa a"
+                            [(ngModel)]="quiz.perguntas[5].a" required />
+
+                        <input type="text" class="form-control" id="inputTitle10" name="j" placeholder="Alternativa b"
+                            [(ngModel)]="quiz.perguntas[5].b" required />
+
+                        <input type="text" class="form-control" id="inputTitle11" name="k" placeholder="Alternativa c"
+                            [(ngModel)]="quiz.perguntas[5].c" required />
+
+                        <input type="text" class="form-control" id="inputTitle12" name="l" placeholder="Alternativa d"
+                            [(ngModel)]="quiz.perguntas[5].d" required />
+
+                        <input type="text" class="form-control" id="inputTitle13" name="m" placeholder="Alternativa e"
+                            [(ngModel)]="quiz.perguntas[5].e" required />
+
+                        <label for="inputResposta5" class="mt-2">Resposta:</label>
+                            <select type="text" class="form-control" id="inputResposta5" name="numero de alternativas"
+                                placeholder="Resposta correta" [(ngModel)]="quiz.perguntas[5].respostaCerta" required>
+                                <option [value]="quiz.perguntas[5].a">{{quiz.perguntas[5].a}}</option>
+                                <option [value]="quiz.perguntas[5].b">{{quiz.perguntas[5].b}}</option>
+                                <option [value]="quiz.perguntas[5].c">{{quiz.perguntas[5].c}}</option>
+                                <option [value]="quiz.perguntas[5].d">{{quiz.perguntas[5].d}}</option>
+                                <option [value]="quiz.perguntas[5].e">{{quiz.perguntas[5].e}}</option>
+                            </select>
+                    </div>
+
+                    <div style="margin-bottom: 30px;">
+                        <input type="text" class="form-control" id="inputTitle8" name="h" placeholder="Pergunta"
+                            [(ngModel)]="quiz.perguntas[6].pergunta" required />
+
+                        <input type="text" class="form-control" id="inputTitle9" name="i" placeholder="Alternativa a"
+                            [(ngModel)]="quiz.perguntas[6].a" required />
+
+                        <input type="text" class="form-control" id="inputTitle10" name="j" placeholder="Alternativa b"
+                            [(ngModel)]="quiz.perguntas[6].b" required />
+
+                        <input type="text" class="form-control" id="inputTitle11" name="k" placeholder="Alternativa c"
+                            [(ngModel)]="quiz.perguntas[6].c" required />
+
+                        <input type="text" class="form-control" id="inputTitle12" name="l" placeholder="Alternativa d"
+                            [(ngModel)]="quiz.perguntas[6].d" required />
+
+                        <input type="text" class="form-control" id="inputTitle13" name="m" placeholder="Alternativa e"
+                            [(ngModel)]="quiz.perguntas[6].e" required />
+
+                        <label for="inputResposta6" class="mt-2">Resposta:</label>
+                            <select type="text" class="form-control" id="inputResposta6" name="numero de alternativas"
+                                placeholder="Resposta correta" [(ngModel)]="quiz.perguntas[6].respostaCerta" required>
+                                <option [value]="quiz.perguntas[6].a">{{quiz.perguntas[6].a}}</option>
+                                <option [value]="quiz.perguntas[6].b">{{quiz.perguntas[6].b}}</option>
+                                <option [value]="quiz.perguntas[6].c">{{quiz.perguntas[6].c}}</option>
+                                <option [value]="quiz.perguntas[6].d">{{quiz.perguntas[6].d}}</option>
+                                <option [value]="quiz.perguntas[6].e">{{quiz.perguntas[6].e}}</option>
+                            </select>
+                    </div>
+
+                    <div style="margin-bottom: 30px;">
+                        <input type="text" class="form-control" id="inputTitle8" name="h" placeholder="Pergunta"
+                            [(ngModel)]="quiz.perguntas[7].pergunta" required />
+
+                        <input type="text" class="form-control" id="inputTitle9" name="i" placeholder="Alternativa a"
+                            [(ngModel)]="quiz.perguntas[7].a" required />
+
+                        <input type="text" class="form-control" id="inputTitle10" name="j" placeholder="Alternativa b"
+                            [(ngModel)]="quiz.perguntas[7].b" required />
+
+                        <input type="text" class="form-control" id="inputTitle11" name="k" placeholder="Alternativa c"
+                            [(ngModel)]="quiz.perguntas[7].c" required />
+
+                        <input type="text" class="form-control" id="inputTitle12" name="l" placeholder="Alternativa d"
+                            [(ngModel)]="quiz.perguntas[7].d" required />
+
+                        <input type="text" class="form-control" id="inputTitle13" name="m" placeholder="Alternativa e"
+                            [(ngModel)]="quiz.perguntas[7].e" required />
+
+                            <label for="inputResposta7" class="mt-2">Resposta:</label>
+                            <select type="text" class="form-control" id="inputResposta7" name="numero de alternativas"
+                                placeholder="Resposta correta" [(ngModel)]="quiz.perguntas[7].respostaCerta" required>
+                                <option [value]="quiz.perguntas[7].a">{{quiz.perguntas[7].a}}</option>
+                                <option [value]="quiz.perguntas[7].b">{{quiz.perguntas[7].b}}</option>
+                                <option [value]="quiz.perguntas[7].c">{{quiz.perguntas[7].c}}</option>
+                                <option [value]="quiz.perguntas[7].d">{{quiz.perguntas[7].d}}</option>
+                                <option [value]="quiz.perguntas[7].e">{{quiz.perguntas[7].e}}</option>
+                            </select>
+                    </div>
+
+                    <div style="margin-bottom: 30px;">
+                        <input type="text" class="form-control" id="inputTitle8" name="h" placeholder="Pergunta"
+                            [(ngModel)]="quiz.perguntas[8].pergunta" required />
+
+                        <input type="text" class="form-control" id="inputTitle9" name="i" placeholder="Alternativa a"
+                            [(ngModel)]="quiz.perguntas[8].a" required />
+
+                        <input type="text" class="form-control" id="inputTitle10" name="j" placeholder="Alternativa b"
+                            [(ngModel)]="quiz.perguntas[8].b" required />
+
+                        <input type="text" class="form-control" id="inputTitle11" name="k" placeholder="Alternativa c"
+                            [(ngModel)]="quiz.perguntas[8].c" required />
+
+                        <input type="text" class="form-control" id="inputTitle12" name="l" placeholder="Alternativa d"
+                            [(ngModel)]="quiz.perguntas[8].d" required />
+
+                        <input type="text" class="form-control" id="inputTitle13" name="m" placeholder="Alternativa e"
+                            [(ngModel)]="quiz.perguntas[8].e" required />
+
+                            <label for="inputResposta8" class="mt-2">Resposta:</label>
+                            <select type="text" class="form-control" id="inputResposta8" name="numero de alternativas"
+                                placeholder="Resposta correta" [(ngModel)]="quiz.perguntas[8].respostaCerta" required>
+                                <option [value]="quiz.perguntas[8].a">{{quiz.perguntas[8].a}}</option>
+                                <option [value]="quiz.perguntas[8].b">{{quiz.perguntas[8].b}}</option>
+                                <option [value]="quiz.perguntas[8].c">{{quiz.perguntas[8].c}}</option>
+                                <option [value]="quiz.perguntas[8].d">{{quiz.perguntas[8].d}}</option>
+                                <option [value]="quiz.perguntas[8].e">{{quiz.perguntas[8].e}}</option>
+                            </select>
+                    </div>
+
+                    <div style="margin-bottom: 30px;">
+                        <input type="text" class="form-control" id="inputTitle8" name="h" placeholder="Pergunta"
+                            [(ngModel)]="quiz.perguntas[9].pergunta" required />
+
+                        <input type="text" class="form-control" id="inputTitle9" name="i" placeholder="Alternativa a"
+                            [(ngModel)]="quiz.perguntas[9].a" required />
+
+                        <input type="text" class="form-control" id="inputTitle10" name="j" placeholder="Alternativa b"
+                            [(ngModel)]="quiz.perguntas[9].b" required />
+
+                        <input type="text" class="form-control" id="inputTitle11" name="k" placeholder="Alternativa c"
+                            [(ngModel)]="quiz.perguntas[9].c" required />
+
+                        <input type="text" class="form-control" id="inputTitle12" name="l" placeholder="Alternativa d"
+                            [(ngModel)]="quiz.perguntas[9].d" required />
+
+                        <input type="text" class="form-control" id="inputTitle13" name="m" placeholder="Alternativa e"
+                            [(ngModel)]="quiz.perguntas[9].e" required />
+
+                            <label for="inputResposta9" class="mt-2">Resposta:</label>
+                            <select type="text" class="form-control" id="inputResposta9" name="numero de alternativas"
+                                placeholder="Resposta correta" [(ngModel)]="quiz.perguntas[9].respostaCerta" required>
+                                <option [value]="quiz.perguntas[9].a">{{quiz.perguntas[9].a}}</option>
+                                <option [value]="quiz.perguntas[9].b">{{quiz.perguntas[9].b}}</option>
+                                <option [value]="quiz.perguntas[9].c">{{quiz.perguntas[9].c}}</option>
+                                <option [value]="quiz.perguntas[9].d">{{quiz.perguntas[9].d}}</option>
+                                <option [value]="quiz.perguntas[9].e">{{quiz.perguntas[9].e}}</option>
+                            </select>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+
+                    <button type="submit" class="botao_envio" [disabled]="!addQuizForm.form.valid">
+                        Adicionar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

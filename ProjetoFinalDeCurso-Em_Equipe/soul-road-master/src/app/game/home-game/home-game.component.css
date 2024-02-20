@@ -1,0 +1,75 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;800&display=swap');
+
+.main_banner{
+    min-height: 60vh;
+    background-image: url('../../../assets/banner_games2.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.branco{
+    color: white;
+}
+
+.texto_botao{
+    width: 50%;
+    text-align: center;
+}
+
+.bolder{
+    font-weight: 800;
+}
+
+.b_banner{
+    background: #3CB4C4;
+    width: 200px;
+    border-radius: 5px;
+    border: none;
+    padding: 7px 25px 7px 25px;
+}
+
+.h_menor{
+    font-size: 1.8rem;
+}
+
+.light{
+    font-weight: 100;
+}
+
+.circle{
+    min-height: 65vh;
+    width: 100%;
+    border-radius: 50%;
+    background: #3F97D3;
+    overflow: hidden;
+}
+
+.dark_circle{
+    background: black;
+    min-height: 65vh;
+    width: 100%;
+    opacity: 0.75;
+    z-index: 10;
+}
+
+.h1_circle{
+    position: absolute;
+    font-weight: 800;
+    z-index: 20;
+}
+
+#h1_quiz, #h1_desafio, #h1_ranking, #dark_circle_ranking, #dark_circle_quiz, #dark_circle_desafio{
+    display: none;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    #desafio_div, #ranking_div{
+        margin-top: 20px;
+    }
+}
+
+.icons_circle{
+    position: absolute;
+}

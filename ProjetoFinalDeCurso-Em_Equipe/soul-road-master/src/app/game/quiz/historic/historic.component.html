@@ -1,0 +1,35 @@
+<app-navbar></app-navbar>
+
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-md-12 d-flex align-items-center justify-content-center flex-column bg_azul pb-5">
+            <h1 class="titulo_ranking">RANKING</h1>
+            <img [src]="usuario.picProfile" alt="" class="img-fluid imagem_perfil_ranking">
+            <h3 class="nome_individuo">{{usuario.fullname}}</h3>
+            <p class="top_pontuacao">{{usuario.userPoints}}  Pontos</p>
+        </div>
+    </div>
+
+    <div class="row mt-2">
+        <div class="col-md-12 d-flex flex-column justify-content-center align-items-center">
+
+            <div class="container_ranking mb-3"
+                *ngFor="let user of User | filter : term | orderBy: order: reverse ; let indexOfelement = index;">
+                <div *ngIf="user.userPoints > 0" class="d-flex align-items-center">
+                    <h3 class="colocacao mr-5">{{indexOfelement + 1}}º</h3>
+                    <img [src]="user.picProfile" alt="" class="img-fluid imagem_perfil_ranking_menor mr-5">
+                    <div>
+                        <h3 class="nome_individuo">{{user.fullname}}</h3>
+                        <p class="top_pontuacao">{{user.userPoints}} Pontos</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+</div>

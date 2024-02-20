@@ -1,0 +1,199 @@
+.perfil-lateral{
+    position: absolute;
+    width: 312px;
+    height: 377px;
+    left: 1300px;
+    top: 400px;
+    border: 2px solid black;
+}
+
+.nova_publicacao{
+    margin-top: 20px;
+    border: 1px solid grey;
+    border-radius: 10px;
+    padding: 15px;
+    min-height: 10vh;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.img_perfil{
+    width: 100px;    
+    padding-right: 10px;
+    padding-left: 10px;
+    border-radius: 50px;
+}
+
+.img_perfil_lateral{
+    width: 150px;
+    position: relative;
+    bottom: 5vh;
+    padding-right: 10px;
+    padding-left: 10px;
+    border-radius: 75px;
+}
+
+.p_nova_publicacao{
+    background-color: #C4C4C4;
+    width: 85%;
+    margin-top: 10px;
+    padding: 8px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.post{
+    margin-top: 35px;
+    border: 1px solid grey;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    height: fit-content;
+    border-radius: 10px;
+}
+
+.linha_divisao{
+    margin-top: 35px;
+    height: 2px;
+    background: #C4C4C4;
+    width: 100%;
+}
+
+.linha_divisao_post{
+    margin-top: 20px;
+    height: 2px;
+    background: #C4C4C4;
+    width: 95%;
+}
+
+.perfil_post{
+    margin-top: 10px;
+}
+
+.textos_post{
+    padding-left: 10px;
+    padding-top: 15px;
+}
+
+.nome_pessoa_post{
+    margin-bottom: -3px;
+    font-weight: bold;
+}
+
+.paragrafo_post{
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-top: 25px;
+}
+
+.img_post{
+    width: 100%;
+    padding-top: 20px;
+    padding-right: 50px;
+    padding-left: 50px;
+    padding-bottom: 20px;
+}
+
+.img_like{
+    width: 28px;
+    height: 28px;
+    cursor: pointer;
+}
+
+.img_like:hover{
+    filter: drop-shadow(0 0 0.5rem crimson);
+}
+
+.like_comentarios{
+    padding-top: 20px;
+    /* padding-left: 50px; */
+}
+
+.like{
+    margin-right: 10px;
+}
+
+.comentarios{
+    padding-top: 20px;
+    padding-right: 20px;
+}
+
+.retangulo_amarelo{
+    background: #FAC100;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    min-height: 8vh;
+}
+
+.perfil_lateral{
+    position: sticky;
+    top: 90px;
+    margin-top: 20px;
+    border: 1px solid grey;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    min-height: 40vh;
+    border-radius: 10px;
+    /* background-image: url('../../../assets/background_perfil_lateral.png');
+    background-repeat: no-repeat; */
+}
+
+.footer_textos{
+    padding: 10px;
+    margin-top: -30px;
+}
+
+.nome_footer{
+    font-weight: bold;
+}
+
+.perfil_mobile{
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .img_perfil{
+        width: 20%;
+    }
+    .perfil_mobile{
+        display: block;
+    }
+    .perfil_main{
+        display: none;
+    }
+
+}
+
+.footer_post{
+    margin: 0;
+}
+
+.container-chat{
+    width: 450px;
+    cursor: pointer;
+    position: fixed;
+    right: 0;
+    bottom: 0;
+}
+
+.barrinha-chat{
+    border: 1px solid black;
+    border-radius: 10px 10px 0px 0px;
+    background-color: RGB(60, 180, 196);
+}
+
+app-chat{
+    max-height: 500px;
+    /* margin-top: 200px; */
+    width:450px;
+    font-size: smaller;
+    overflow-y: auto;
+}
+
+@media (max-width: 600px){
+    app-chat{
+        width: 100%;
+        overflow-y: scroll;
+    }
+    .container-chat{
+        width: 100%;
+        max-height: 50vh !important;
+        overflow-y: scroll;
+    }
+}

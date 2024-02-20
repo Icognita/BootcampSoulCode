@@ -1,0 +1,21 @@
+<app-navbar></app-navbar>
+
+<main class="container">
+    <div class="mt-5">
+        <h2 class="text-center my-2 tituloCate">ADICIONAR NOVA CATEGORIA DE DESAFIO</h2>
+        <button routerLink="/gerenciamento" type="submit" class="btn btn-primary my-2 float-rigth">Voltar</button>
+    </div>
+    
+    <div class="container-categoria d-flex align-items-center mt-3">
+        <form #addCatDesafiosForm="ngForm" class="container mt-5" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+                <label for="assunto" class="assuntoCate">Assunto(Tecnologia)</label>
+                <input type="text" class="form-control" id="assunto" name="assunto" [(ngModel)]="categoriaDesafios.categoria" required />
+            </div>         
+            <button type="submit" class="btn btn-primary">
+                 Adicionar
+            </button>        
+        </form>  
+    </div>
+</main>
+

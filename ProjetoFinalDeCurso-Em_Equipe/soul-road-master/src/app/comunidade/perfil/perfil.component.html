@@ -1,0 +1,134 @@
+<app-navbar (searchEmitter)="searchText = $event"></app-navbar>
+
+<main class="container-fluid">
+  <div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+      <div class="retangulo_azul"></div>
+      <div class="row">
+        <div class="col-md-2">
+          <div class="container_foto">
+            <!-- Carrega foto do perfil do usuario logado -->
+            <img [src]="usuario.picProfile" alt="pic" class="img_perfil_principal img-fluid"
+              style="border-radius: 50% ;">
+          </div>
+        </div>
+        <div class="col-md-10 d-flex justify-content-between pt-2">
+          <div>
+            <h6> {{ usuario.fullname }} </h6>
+            <p class="p_turma_ranking"> {{ usuario.classroom }}</p>
+          </div>
+          <div class="botoes">
+            <!-- ######### Aqui edita o perfil para colocar foto,criando modal ########  -->
+            <button class="botao_amarelo" (click)="openUpdateUserModal(usuario)">Editar</button>
+            <!-- #################### FIM ############################################### -->
+          </div>
+          <div class="ranking_selos text-center">
+            <h6>Confira os selos de {{ usuario.fullname }}</h6>
+            <p class="top_pontuacao" *ngIf="usuario.userPoints != 0">{{usuario.userPoints}}  Pontos</p>
+          </div>
+          <div class="botoes">
+            <a href="/game"><button class="botao_amarelo">Jogar</button></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-1">
+
+        <div class="col-md-6">
+          <div class="nome_selos_botao">
+            <p class="text-justify">
+              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ea obcaecati dolore ducimus aliquam est
+              inventore, possimus minus libero excepturi! Cupiditate neque tenetur consequatur reprehenderit placeat
+              alias explicabo soluta quod error.
+            </p>
+          </div>
+        </div>
+
+        <div class="col-md-6 d-flex">
+
+          <div class="row selos_main" *ngFor="let selo of usuario.badges">
+            <div>
+              <img class="img-thumbnail selos" [src]="selo" alt="selo">
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+      <div class="linha_azul"></div>
+    </div>
+  </div>
+
+  <section class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+      <div class="nova_publicacao d-flex align-items-center">
+        <img class="img_perfil_post" [src]="usuario.picProfile" alt="" style="border-radius: 50%">
+        <p class="p_nova_publicacao" (click)="openAddPostModal()">
+          Nova publicação
+        </p>
+      </div>
+      <div class="linha_divisao"></div>
+      <div *ngIf="posts$ | async as user; else spinner"></div>
+      <div class="text-center text-muted my-5" *ngIf="(posts$ | async)?.length === 0">
+        Sem postagens.
+      </div>
+      <!-- Informações sobre Usuario -->
+      <div class="post mb-4" *ngFor="let post of posts$ | async | searchPipe: searchText">
+        <div class="perfil_post d-flex align-items-center">
+          <img class="img_perfil_post circle" [src]="usuario.picProfile" alt="" style="border-radius:50%;">
+          <div class="textos_post">
+            <h5 class="nome_pessoa_post">{{ post.nome }}</h5>
+            <p>{{usuario.classroom}}</p>
+            <small> Criado por {{ post.nome }} em {{ post.dataHora | date: 'dd/MM/yyyy HH:mm' }} </small>
+            <div>
+              <button class="card-link btn btn-link btn-sm" (click)="openUpdatePostModal(post)">
+                Editar
+              </button>
+              <button (click)="deletePost(post)" class="card-link btn btn-link btn-sm">
+                Apagar
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-center">
+          <div class="linha_divisao_post"></div>
+        </div>
+
+        <div class="corpo_post">
+          <p class="paragrafo_post">
+            {{ post.texto }}
+          </p>
+          <img [src]="post.imagePost" class="img_post img-fluid" alt="" height="90%">
+        </div>
+
+        <div class="d-flex justify-content-center">
+          <div class="linha_divisao_post"></div>
+        </div>
+
+        <div class="footer_post mb-3 mr-5">
+          <div class="like_comentarios pl-5">
+            <img [src]="((post.curtidas.length >= 1) && (likedSrc)) || ((post.curtidas.length < 1) && (likeSrc))"
+              class="img_like like" title="Curtir" (click)="curtir(post)" id="imgClick">{{postCurtidas(post)}}
+            <app-comments style="width:100%" [post]="post"></app-comments>
+          </div>
+        </div>
+      </div>
+    </div>
+    <ng-template #spinner>
+      <div class="d-flex align-items-center">
+        <strong>Carregando...</strong>
+        <div class="spinner-border ml-auto text-primary" role="status" aria-hidden="true"></div>
+      </div>
+    </ng-template>
+  </section>
+
+</main>

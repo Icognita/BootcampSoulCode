@@ -1,0 +1,43 @@
+<div class="modal-header">
+  <h4 class="text-center" id="modal-basic-title">Criar publicação</h4>
+
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<form #addPostForm="ngForm" (ngSubmit)="onSubmit()">
+
+  <div class="modal-body">
+    <div class="form-group">
+      <label for="inputDiario1"></label>
+      <textarea class="form-control" id="inputDiario1" rows="3" name="diary" placeholder="No que você está pensando?"
+        [(ngModel)]="post.texto" required></textarea>
+    </div>
+
+    <div class="custom-file">
+      <input #inputImage type="file" class="custom-file-input" id="customFile" name="image" accept=".png,.jpg"
+        (change)="changeImage(inputImage.files)" required />
+      <label class="custom-file-label" for="customFile">Escolher foto</label>
+      <label id="customFileLabel"></label>      
+    </div>
+  </div>
+  
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-warning" [disabled]="!addPostForm.form.valid || image === null">
+      Publicar
+    </button>
+  </div>
+</form>
+
+
+<!-- <div class="custom-file">
+  <input #inputImage type="file" class="custom-file-input" id="customFile" name="image" accept=".png,.jpg"
+    (change)="changeImage(inputImage.files)" required />
+  <label class="custom-file-label" id="customFileLabel" for="customFile">Escolher Foto</label>
+</div>
+<div class="modal-footer">
+  <button type="submit" class="btn btn-primary" [disabled]="!addPostForm.form.valid || image === null">
+    Adicionar
+  </button>
+</div> -->

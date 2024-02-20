@@ -1,0 +1,52 @@
+<div class="modal-header">
+
+    <h4 class="modal-title" id="modal-basic-title">Editar publicação</h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="activeModal.dismiss()"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form #addPostForm="ngForm" (ngSubmit)="onSubmit()">
+    <div class="modal-body">      
+      <div class="form-group">
+        <label for="inputDiario1">Texto</label>
+        <textarea
+          class="form-control"
+          id="inputDiario1"
+          rows="3"
+          name="texto"
+          placeholder="Ex: Foi muito bom!"
+          [(ngModel)]="post.texto"
+          required
+        ></textarea>
+      </div>
+
+      <div class="custom-file">
+        <input
+          #inputImage
+          type="file"
+          class="custom-file-input"
+          id="customFile"
+          name="image"
+          accept=".png,.jpg"
+          (change)="changeImage(inputImage.files)"
+          required
+        />
+        <label class="custom-file-label" for="customFile">Escolher foto</label>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button
+        type="submit"
+        class="btn btn-primary"
+
+        [disabled]="!addPostForm.form.valid">
+        Editar
+      </button>
+    </div>
+  </form>
+

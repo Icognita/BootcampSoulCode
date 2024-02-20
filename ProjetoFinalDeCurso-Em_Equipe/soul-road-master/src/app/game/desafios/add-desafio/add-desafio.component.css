@@ -1,0 +1,44 @@
+.imagem_add{
+    width: 35% !important;
+}
+
+label {
+    font-weight: 900 !important;
+    margin-bottom: -5px !important;
+    letter-spacing: 2px !important;
+}
+
+input, select, mat-form-field{
+    border: none !important;
+    border-bottom: 3px solid #3F97D3 !important;
+}
+
+mat-form-field{
+    width: 100%;
+}
+
+.botao_envio{
+    cursor: pointer;
+    border: none;
+    padding: 5px;
+    min-width: 200px;
+    background-color: #3F97D3;
+    color: white;
+    font-weight: 600;
+}
+
+.botao_envio:hover{
+    transform: scale(1.02);
+    opacity: 0.8;
+}
+
+.titulo-add{
+    font-weight: 900;
+    color: #3F97D3;
+}
+
+.linha_amarela{
+    background: #FAC100;
+    height: 2px;
+    width: 100%;
+}

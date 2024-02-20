@@ -1,0 +1,41 @@
+
+<div class="d-flex justify-content-between">
+  <img src="../../../assets/coments.png" class="img_comentario" title="Novo Comentário" (click)="openAddCommentModal(post)"> 
+  <button class="btn btn-secondary" style="width: 50%" (click)="abreFecha()">Clique para ver os comentários</button>
+</div>
+
+<div [hidden]="!(flagAberto)" class="container-fluid">
+  <div *ngIf="allComments$ | async as user; else spinner"></div>
+  <div class="row">    
+
+    <div class="col col-12 my-1" *ngFor="let comentario of allComments$ | async ">
+      <div class="container-fluid card">
+        <div class="card-body">
+          <p class="card-text">
+            {{ comentario.texto }}
+          </p>
+          <small> Criado por {{ comentario.nome }} em {{ comentario.dataHora | date: 'dd/MM/yyyy HH:mm' }} </small>
+          <div class="mt-2 text-center">
+            <button class="card-link btn btn-warning btn-sm" (click)="openUpdateCommentModal(comentario)"
+              [appEsconde]="comentario.uid">
+              Editar
+            </button>
+            <button (click)="deleteComment(comentario)" class="card-link btn btn-danger btn-sm"
+              [appEsconde]="comentario.uid">
+              Apagar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+<ng-template #spinner>
+  <div class="d-flex align-items-center">
+    <strong>Carregando...</strong>
+    <div class="spinner-border ml-auto text-primary" role="status" aria-hidden="true"></div>
+  </div>
+</ng-template>
